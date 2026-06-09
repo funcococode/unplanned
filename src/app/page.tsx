@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {
-  ArrowRight, MapPin, CalendarDays, Wallet, Vote, Package,
+  ArrowRight, CalendarDays, Wallet, Vote, Package,
   ShieldAlert, ListChecks, MessageCircle, CloudSun, Link2,
   Users, Bell, UserCircle, CheckCircle2, Star, ArrowUpRight,
 } from 'lucide-react';
@@ -256,4 +256,33 @@ export default async function LandingPage() {
               {featuredTrips.map((trip) => <TripCard key={trip.id} trip={trip} />)}
             </div>
             <div className="mt-8 text-center sm:hidden">
-              <Link href="/trips" className="inline-flex items-center gap-2 text-sm font-medium text-gray-700 hove
+              <Link href="/trips" className="inline-flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors">
+                View all trips
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── CTA ── */}
+      <section className="py-24 px-4 sm:px-6 bg-gray-900">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Ready to stop saying &ldquo;maybe next time&rdquo;?
+          </h2>
+          <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
+            Create a trip in under 2 minutes. Find your crew, build a plan, and actually go.
+          </p>
+          <Link
+            href={isLoggedIn ? '/trips/new' : '/login'}
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-orange-500 text-white text-base font-semibold rounded-2xl hover:bg-orange-600 transition-colors"
+          >
+            {isLoggedIn ? 'Create a Trip' : 'Get started free'} <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

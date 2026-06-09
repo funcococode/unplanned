@@ -188,7 +188,7 @@ function DayForm({ initial, onSave, onCancel }: { initial?: Partial<ItineraryDay
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, isLoggedIn, currentUserId }: Props) {
+export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, isLoggedIn: _isLoggedIn, currentUserId }: Props) {
   const [days, setDays] = useState<ItineraryDay[]>(initialDays);
   const [addingDay, setAddingDay]    = useState(false);
   const [editingDay, setEditingDay]  = useState<string | null>(null);
@@ -199,7 +199,7 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
   const [error, setError]            = useState<string | null>(null);
 
   const toggleDay = (dayId: string) =>
-    setCollapsedDays((prev) => { const n = new Set(prev); n.has(dayId) ? n.delete(dayId) : n.add(dayId); return n; });
+    setCollapsedDays((prev) => { const n = new Set(prev); if (n.has(dayId)) { n.delete(dayId); } else { n.add(dayId); } return n; });
 
   const refetch = useCallback(async () => {
     const fresh = await apiClient.get<ItineraryDay[]>(`/trips/${tripId}/itinerary`);

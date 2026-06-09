@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { requireAuth } from '@/lib/auth-helpers';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';

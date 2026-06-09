@@ -10,7 +10,6 @@ import { Avatar } from '@/components/shared/avatar';
 import { Badge } from '@/components/shared/badge';
 import { TripNav } from '@/components/shared/trip-nav';
 import { TripActions } from '@/features/trips/trip-actions';
-import { ItineraryRouteMap } from '@/features/itinerary/itinerary-route-map';
 import { PersonalPacking } from '@/features/trips/personal-packing';
 import { TripWeather } from '@/features/trips/trip-weather';
 import { TripStatusBadge } from '@/features/trips/trip-status';
@@ -232,4 +231,101 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
                   <Link href={`/login?callbackUrl=/trips/${id}`} className="flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50 transition-colors group">
                     <div className="flex -space-x-2">
                       {[...Array(3)].map((_, i) => (
-                        <div key={i} className="w-9 h-9 rounded-full bg-gray-200 border-2 border-white flex items-center j
+                        <div key={i} className="w-9 h-9 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center" />
+                      ))}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">Sign in to see travelers</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{trip._count.members} traveler{trip._count.members !== 1 ? 's' : ''} joined</p>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-orange-400 transition-colors shrink-0" />
+                  </Link>
+                </section>
+              )}
+
+              {/* Packing preview — members/creator only */}
+              {(isCreator || isMember) && essentialItems.length > 0 && (
+                <section>
+                  <div className="flex items-center justify-between mb-3">
+                    <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                      <Package className="h-5 w-5 text-orange-500" />Packing
+                    </h2>
+                    <Link href={`/trips/${id}/packing`}
+                      className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600 font-medium">
+                      View all <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                  <div className="space-y-2">
+                    {essentialItems.slice(0, 3).map((item) => (
+                      <div key={item.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                        <CheckCircle2 className="h-4 w-4 text-gray-300 shrink-0" />
+                        <p className="text-sm font-medium text-gray-900 flex-1 truncate">{item.text}</p>
+                        {item.category && <span className="text-xs text-gray-400 shrink-0">{item.category}</span>}
+                      </div>
+                    ))}
+                    {essentialItems.length > 3 && (
+                      <Link href={`/trips/${id}/packing`}
+                        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-gray-200 text-sm text-gray-400 hover:border-orange-300 hover:text-orange-500 transition-colors mt-1">
+                        +{essentialItems.length - 3} more items <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
+                    )}
+                  </div>
+                </section>
+              )}
+
+              {/* Trip tools entry — members/creator only */}
+              {(isCreator || isMember) && (
+                <section>
+                  <div className="flex items-center justify-between mb-3">
+                    <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                      <Wrench className="h-5 w-5 text-orange-500" />Trip Tools
+                    </h2>
+                  </div>
+                  <Link href={`/trips/${id}/tools`}
+                    className="flex items-center gap-4 p-5 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl border border-orange-100 hover:border-orange-300 transition-colors group">
+                    <div className="flex gap-3 text-2xl">
+                      <span>💸</span><span>🗳️</span><span>🚨</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">Expenses, Polls & Emergency Info</p>
+                      <p className="text-xs text-gray-500 mt-0.5">Manage shared costs, vote on plans, and keep emergency contacts safe.</p>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-orange-400 transition-colors shrink-0" />
+                  </Link>
+                </section>
+              )}
+            </div>
+
+            {/* ── Sidebar ── */}
+            <div className="space-y-6">
+              <TripActions
+                tripId={id}
+                userId={userId ?? null}
+                isCreator={isCreator}
+                isMember={isMember}
+                isLoggedIn={isLoggedIn}
+                isFull={spotsLeft <= 0}
+                hasPendingRequest={hasPendingRequest}
+              />
+
+              <TripWeather
+                destination={trip.destination}
+                startDate={trip.startDate.toISOString()}
+                endDate={trip.endDate.toISOString()}
+              />
+
+              {(isCreator || isMember) && (
+                <PersonalPacking
+                  tripId={id}
+                  essentialItems={essentialItems.map((e) => ({ id: e.id, text: e.text, category: e.category ?? '' }))}
+                />
+              )}
+            </div>
+
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}

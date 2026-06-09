@@ -11,7 +11,7 @@ import { TripCard } from '@/components/shared/trip-card';
 import { Avatar } from '@/components/shared/avatar';
 import { Badge } from '@/components/shared/badge';
 import { JoinRequestActions } from '@/features/dashboard/join-request-actions';
-import type { TripSummaryDto, JoinRequestDto } from '@/types';
+import type { TripSummaryDto } from '@/types';
 import { formatDate } from '@/lib/utils';
 
 export const metadata = { title: 'Dashboard' };
@@ -160,4 +160,14 @@ export default async function DashboardPage() {
 
 function EmptyState({ message, cta }: { message: string; cta: { label: string; href: string } }) {
   return (
-   
+    <div className="flex flex-col items-center justify-center py-16 px-4 bg-white rounded-2xl border border-dashed border-gray-200 text-center">
+      <p className="text-gray-500 mb-4">{message}</p>
+      <Link
+        href={cta.href}
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white text-sm font-semibold rounded-xl hover:bg-orange-600 transition-colors"
+      >
+        {cta.label}
+      </Link>
+    </div>
+  );
+}

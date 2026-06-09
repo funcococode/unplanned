@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Navbar } from '@/components/layout/navbar';

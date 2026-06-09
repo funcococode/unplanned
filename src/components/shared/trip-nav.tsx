@@ -25,7 +25,7 @@ export function TripNav({ tripId, isMember = false }: Props) {
 
   return (
     <nav className="flex items-center gap-1 bg-gray-50 rounded-2xl p-1 overflow-x-auto">
-      {tabs.map((tab, i) => {
+      {tabs.map((tab) => {
         const href = `${base}${tab.href}`;
         const isActive = tab.href === ''
           ? pathname === base

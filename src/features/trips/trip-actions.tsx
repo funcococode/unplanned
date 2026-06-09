@@ -11,10 +11,11 @@ interface TripActionsProps {
   isMember: boolean;
   isLoggedIn: boolean;
   isFull: boolean;
+  userId?: string | null;
   hasPendingRequest: boolean;
 }
 
-export function TripActions({ tripId, isCreator, isMember, isLoggedIn, isFull, hasPendingRequest }: TripActionsProps) {
+export function TripActions({ tripId, isCreator, isMember, isLoggedIn, isFull, hasPendingRequest  }: TripActionsProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [requested, setRequested] = useState(hasPendingRequest);

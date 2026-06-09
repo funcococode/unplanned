@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth-helpers';
 import { ensureUser } from '@/lib/ensure-user';
@@ -62,4 +62,7 @@ export async function POST(req: NextRequest) {
       creatorId: userId,
       members: { create: { userId, role: MemberRole.CREATOR } },
     },
-    include: { creator: true, _count: { select: 
+    include: { creator: true, _count: { select: { members: true } } },
+  });
+  return Response.json(tripToSummary(trip));
+}

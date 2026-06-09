@@ -56,12 +56,10 @@ export function Navbar() {
                     <>
                       <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)} />
                       <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black/5 py-1 z-20">
-                        {/* Identity */}
                         <div className="px-4 py-3 border-b border-gray-100">
                           <p className="text-sm font-semibold text-gray-900 truncate">{session.user.name}</p>
                           <p className="text-xs text-gray-400 truncate">{session.user.email}</p>
                         </div>
-
                         <Link href={profileHref} onClick={() => setProfileOpen(false)} className={menuItem}>
                           <User className="h-4 w-4" /> My Profile
                         </Link>
@@ -71,7 +69,6 @@ export function Navbar() {
                         <Link href="/profile/edit" onClick={() => setProfileOpen(false)} className={menuItem}>
                           <Pencil className="h-4 w-4" /> Edit Profile
                         </Link>
-
                         <div className="border-t border-gray-100 mt-1 pt-1">
                           <button onClick={() => signOut({ callbackUrl: '/' })} className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                             <LogOut className="h-4 w-4" /> Sign Out
@@ -109,7 +106,6 @@ export function Navbar() {
             )}
             {status === 'authenticated' ? (
               <>
-                {/* Identity row */}
                 <div className="flex items-center gap-3 px-3 py-2 mb-1">
                   {session?.user?.image
                     ? <Image src={session.user.image} alt="" width={32} height={32} className="rounded-full" />
@@ -119,7 +115,6 @@ export function Navbar() {
                     <p className="text-xs text-gray-400 truncate">{session?.user?.email}</p>
                   </div>
                 </div>
-
                 <Link href={profileHref} onClick={() => setMenuOpen(false)} className={mobileItem}>
                   <User className="h-4 w-4" /> My Profile
                 </Link>
@@ -129,4 +124,24 @@ export function Navbar() {
                 <Link href="/dashboard" onClick={() => setMenuOpen(false)} className={mobileItem}>
                   <LayoutDashboard className="h-4 w-4" /> Dashboard
                 </Link>
-                <Link hre
+                <Link href="/profile/edit" onClick={() => setMenuOpen(false)} className={mobileItem}>
+                  <Pencil className="h-4 w-4" /> Edit Profile
+                </Link>
+                <button
+                  onClick={() => { signOut({ callbackUrl: '/' }); setMenuOpen(false); }}
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg w-full"
+                >
+                  <LogOut className="h-4 w-4" /> Sign Out
+                </button>
+              </>
+            ) : (
+              <Link href="/login" onClick={() => setMenuOpen(false)} className={mobileItem}>
+                <User className="h-4 w-4" /> Sign In
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
