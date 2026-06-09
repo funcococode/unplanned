@@ -44,11 +44,12 @@ export async function POST(req: NextRequest, { params }: Params) {
   });
 
   if (!isCreator) {
+    const userName = session.user?.name ?? 'A traveler';
     await createNotification({
       userId: trip.creatorId,
       type: 'JOIN_REQUEST_RECEIVED',
       title: 'New itinerary suggestion',
-      body: `${session.user.name ?? 'A traveler'} suggested "${body.title}" for your trip`,
+      body: `${userName} suggested "${body.title}" for your trip`,
       link: `/trips/${tripId}`,
     });
   }
