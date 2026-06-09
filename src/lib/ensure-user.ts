@@ -9,7 +9,7 @@ import type { Session } from 'next-auth';
 export async function ensureUser(userId: string, session: Session) {
   const exists = await prisma.user.findUnique({ where: { id: userId }, select: { id: true } });
   if (exists) return;
-  if (!session.user.email) return;
+  if (!session.user?.email) return;
   await prisma.user.upsert({
     where: { email: session.user.email },
     create: {

@@ -44,8 +44,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       // Proxy dbId (Postgres UUID) as session.user.id, not Google sub
-      session.user.id       = token.dbId ? token.dbId as string : '';
-      session.user.username = (token.username as string | null) ?? null;
+      session.user = {
+        ...session.user,
+        id: token.dbId ? token.dbId as string : '',
+        username: (token.username as string | null) ?? null,
+      };
       return session;
     },
   },

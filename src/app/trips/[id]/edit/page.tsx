@@ -10,18 +10,33 @@ export const metadata = { title: 'Edit Trip' };
 export default async function EditTripPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const session = await auth();
-  if (!session) redirect(`/login?callbackUrl=/trips/${id}/edit`);
+  if (!session?.user?.id) redirect(`/login?callbackUrl=/trips/${id}/edit`);
+  const userId = session.user.id;
 
   const trip = await prisma.trip.findUnique({
     where: { id },
     include: { creator: true, _count: { select: { members: true } } },
   });
   if (!trip) notFound();
-  if (trip.creatorId !== session.user.id) redirect(`/trips/${id}`);
+  if (trip.creatorId !== userId) redirect(`/trips/${id}`);
 
   const tripDto: TripDto = {
     id: trip.id, creatorId: trip.creatorId,
-    creator: { id: trip.creator.id, name: trip.creator.name, username: trip.creator.username, image: trip.creator.image, bio: trip.creator.bio, city: trip.creator.city, country: trip.creator.country, travelStyle: trip.creator.travelStyle as never, tripsCreated: 0, tripsJoined: 0, createdAt: trip.creator.createdAt.toISOString() },
+    creator: {
+      id: trip.creator.id,
+      name: trip.creator.name,
+      username: trip.creator.username,
+      image: trip.creator.image,
+      bio: trip.creator.bio,
+      city: trip.creator.city,
+      country: trip.creator.country,
+      travelStyle: trip.creator.travelStyle as never,
+      languages: trip.creator.languages ?? [],
+      instagram: trip.creator.instagram ?? null,
+      tripsCreated: 0,
+      tripsJoined: 0,
+      createdAt: trip.creator.createdAt.toISOString(),
+    },
     title: trip.title, description: trip.description, destination: trip.destination,
     startDate: trip.startDate.toISOString(), endDate: trip.endDate.toISOString(),
     budgetRange: trip.budgetRange as never, maxMembers: trip.maxMembers,

@@ -9,6 +9,7 @@ export default async function ChatPage({ params }: { params: Promise<{ tripId: s
   const { tripId } = await params;
   const session = await auth();
   if (!session?.user?.id) redirect(`/login?callbackUrl=/chat/${tripId}`);
+  const userId = session.user.id;
 
   const [trip, members, messages] = await Promise.all([
     prisma.trip.findUnique({ where: { id: tripId }, include: { creator: true, _count: { select: { members: true } } } }),
@@ -20,12 +21,26 @@ export default async function ChatPage({ params }: { params: Promise<{ tripId: s
   ]);
 
   if (!trip) notFound();
-  const isMember = members.some((m) => m.userId === session.user.id);
+  const isMember = members.some((m) => m.userId === userId);
   if (!isMember) redirect(`/trips/${tripId}`);
 
   const tripDto: TripDto = {
     id: trip.id, creatorId: trip.creatorId,
-    creator: { id: trip.creator.id, name: trip.creator.name, username: trip.creator.username, image: trip.creator.image, bio: trip.creator.bio, city: trip.creator.city, country: trip.creator.country, travelStyle: trip.creator.travelStyle as never, tripsCreated: 0, tripsJoined: 0, createdAt: trip.creator.createdAt.toISOString() },
+    creator: {
+      id: trip.creator.id,
+      name: trip.creator.name,
+      username: trip.creator.username,
+      image: trip.creator.image,
+      bio: trip.creator.bio,
+      city: trip.creator.city,
+      country: trip.creator.country,
+      travelStyle: trip.creator.travelStyle as never,
+      languages: trip.creator.languages ?? [],
+      instagram: trip.creator.instagram ?? null,
+      tripsCreated: 0,
+      tripsJoined: 0,
+      createdAt: trip.creator.createdAt.toISOString(),
+    },
     title: trip.title, description: trip.description, destination: trip.destination,
     startDate: trip.startDate.toISOString(), endDate: trip.endDate.toISOString(),
     budgetRange: trip.budgetRange as never, maxMembers: trip.maxMembers,
@@ -43,7 +58,7 @@ export default async function ChatPage({ params }: { params: Promise<{ tripId: s
   return (
     <div className="h-screen flex flex-col">
       <Navbar />
-      <ChatRoom trip={tripDto} initialMessages={initialMessages} currentUserId={session.user.id} />
+      <ChatRoom trip={tripDto} initialMessages={initialMessages} currentUserId={userId} />
     </div>
   );
 }

@@ -11,6 +11,7 @@ export function Navbar() {
   const { data: session, status } = useSession();
   const [menuOpen, setMenuOpen]     = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const user = session?.user;
 
   const profileHref = '/profile/me';
 
@@ -47,9 +48,9 @@ export function Navbar() {
                 {/* Avatar dropdown */}
                 <div className="relative">
                   <button onClick={() => setProfileOpen(!profileOpen)} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    {session.user.image
-                      ? <Image src={session.user.image} alt={session.user.name ?? 'Profile'} width={36} height={36} className="rounded-full ring-2 ring-gray-100" />
-                      : <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-sm font-semibold text-gray-700">{session.user.name?.[0] ?? 'U'}</div>}
+                    {user?.image
+                      ? <Image src={user.image} alt={user.name ?? 'Profile'} width={36} height={36} className="rounded-full ring-2 ring-gray-100" />
+                      : <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-sm font-semibold text-gray-700">{user?.name?.[0] ?? 'U'}</div>}
                   </button>
 
                   {profileOpen && (
@@ -57,8 +58,8 @@ export function Navbar() {
                       <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)} />
                       <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black/5 py-1 z-20">
                         <div className="px-4 py-3 border-b border-gray-100">
-                          <p className="text-sm font-semibold text-gray-900 truncate">{session.user.name}</p>
-                          <p className="text-xs text-gray-400 truncate">{session.user.email}</p>
+                          <p className="text-sm font-semibold text-gray-900 truncate">{user?.name}</p>
+                          <p className="text-xs text-gray-400 truncate">{user?.email}</p>
                         </div>
                         <Link href={profileHref} onClick={() => setProfileOpen(false)} className={menuItem}>
                           <User className="h-4 w-4" /> My Profile
@@ -107,12 +108,12 @@ export function Navbar() {
             {status === 'authenticated' ? (
               <>
                 <div className="flex items-center gap-3 px-3 py-2 mb-1">
-                  {session?.user?.image
-                    ? <Image src={session.user.image} alt="" width={32} height={32} className="rounded-full" />
-                    : <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-600">{session?.user?.name?.[0]}</div>}
+                  {user?.image
+                    ? <Image src={user.image} alt="" width={32} height={32} className="rounded-full" />
+                    : <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-600">{user?.name?.[0]}</div>}
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-gray-900 truncate">{session?.user?.name}</p>
-                    <p className="text-xs text-gray-400 truncate">{session?.user?.email}</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">{user?.name}</p>
+                    <p className="text-xs text-gray-400 truncate">{user?.email}</p>
                   </div>
                 </div>
                 <Link href={profileHref} onClick={() => setMenuOpen(false)} className={mobileItem}>
