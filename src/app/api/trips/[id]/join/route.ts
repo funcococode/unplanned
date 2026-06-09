@@ -31,11 +31,12 @@ export async function POST(_req: NextRequest, { params }: Params) {
     data: { tripId, userId, status: 'PENDING' },
   });
 
+  const joinerName = session.user?.name ?? 'Someone';
   await createNotification({
     userId: trip.creatorId,
     type: 'JOIN_REQUEST_RECEIVED',
     title: 'New join request',
-    body: `${session.user.name ?? 'Someone'} wants to join "${trip.title}"`,
+    body: `${joinerName} wants to join "${trip.title}"`,
     link: `/dashboard`,
   });
 
