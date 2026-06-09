@@ -28,9 +28,15 @@ export async function PATCH(req: NextRequest) {
   const user = await prisma.user.update({
     where: { id: userId },
     data: {
-      ...(username   !== undefined && { username }),
-      ...(bio        !== undefined && { bio }),
-      ...(city       !== undefined && { city }),
-      ...(country    !== undefined && { country }),
+      ...(username    !== undefined && { username }),
+      ...(bio         !== undefined && { bio }),
+      ...(city        !== undefined && { city }),
+      ...(country     !== undefined && { country }),
       ...(travelStyle !== undefined && { travelStyle }),
-      ...(languages  !== undefined && { languages })
+      ...(languages   !== undefined && { languages }),
+      ...(instagram   !== undefined && { instagram: instagram || null }),
+      ...(phone       !== undefined && { phone: phone || null }),
+    },
+  });
+  return Response.json({ ...user, createdAt: user.createdAt.toISOString(), updatedAt: user.updatedAt.toISOString() });
+}
