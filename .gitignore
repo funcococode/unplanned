@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+dist/
+dist-seed/
+
+# Environment variables — never commit these
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Prisma
+tsconfig.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo

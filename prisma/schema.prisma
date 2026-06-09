@@ -1,0 +1,407 @@
+// ============================================================
+// Prisma Schema — Unplanned
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---- Enums ----
+
+enum TravelStyle {
+  BACKPACKER
+  LUXURY
+  ROAD_TRIPPER
+  SOLO
+  DIGITAL_NOMAD
+  WEEKEND_EXPLORER
+}
+
+enum TripType {
+  ADVENTURE
+  BACKPACKING
+  ROAD_TRIP
+  WORKATION
+  LEISURE
+  PHOTOGRAPHY
+}
+
+enum BudgetRange {
+  UNDER_5K
+  RANGE_5K_10K
+  RANGE_10K_25K
+  ABOVE_25K
+}
+
+enum MemberRole {
+  CREATOR
+  MEMBER
+}
+
+enum JoinRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum TripStatus {
+  PLANNING
+  CONFIRMED
+  ONGOING
+  COMPLETED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+// ---- Models ----
+
+model User {
+  id          String       @id @default(uuid())
+  email       String       @unique
+  name        String
+  username    String?      @unique
+  image       String?
+  bio         String?      @db.Text
+  city        String?
+  country     String?
+  travelStyle TravelStyle?
+  languages   String[]
+  instagram   String?
+  phone       String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  tripsCreated  Trip[]         @relation("TripCreator")
+  tripMembers   TripMember[]
+  joinRequests  JoinRequest[]
+  messagesSent  Message[]
+  notifications    Notification[]
+  itinerarySuggestions ItineraryItem[] @relation("ItinerarySuggestions")
+  packingItems         UserPackingItem[]
+  expensesPaid         Expense[]            @relation("ExpensesPaid")
+  pollsCreated         Poll[]               @relation("PollsCreated")
+  pollVotes            PollVote[]           @relation("PollVotes")
+  emergencyInfo        EmergencyInfo[]      @relation("EmergencyInfo")
+  tasksCreated         TripTask[]           @relation("TaskCreator")
+  tasksAssigned        TripTask[]           @relation("TaskAssignee")
+
+  @@map("users")
+}
+
+model Trip {
+  id           String      @id @default(uuid())
+  creatorId    String
+  title        String
+  description  String      @db.Text
+  destination  String
+  startDate    DateTime
+  endDate      DateTime
+  budgetRange  BudgetRange
+  maxMembers   Int         @default(10)
+  tripType     TripType
+  status       TripStatus  @default(PLANNING)
+  inviteToken  String?     @unique
+  coverImage   String?
+  meetingPoint String?     @db.Text
+  rules        String?     @db.Text
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  creator      User          @relation("TripCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  members      TripMember[]
+  joinRequests JoinRequest[]
+  messages       Message[]
+  itineraryDays  ItineraryDay[]
+  itineraryItems  ItineraryItem[]
+  essentialItems TripEssentialItem[]
+  packingItems   UserPackingItem[]
+  expenses       Expense[]
+  polls          Poll[]
+  emergencyInfo  EmergencyInfo[]
+  tasks          TripTask[]
+
+  @@index([creatorId])
+  @@index([destination])
+  @@index([startDate])
+  @@index([tripType])
+  @@index([budgetRange])
+  @@map("trips")
+}
+
+model TripMember {
+  id        String     @id @default(uuid())
+  tripId    String
+  userId    String
+  role      MemberRole @default(MEMBER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Relations
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, userId])
+  @@index([tripId])
+  @@index([userId])
+  @@map("trip_members")
+}
+
+model JoinRequest {
+  id        String            @id @default(uuid())
+  tripId    String
+  userId    String
+  status    JoinRequestStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  // Relations
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, userId])
+  @@index([tripId])
+  @@index([userId])
+  @@index([status])
+  @@map("join_requests")
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  tripId    String
+  senderId  String
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  // Relations
+  trip   Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([tripId])
+  @@index([senderId])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+enum NotificationType {
+  JOIN_REQUEST_RECEIVED
+  JOIN_REQUEST_APPROVED
+  JOIN_REQUEST_REJECTED
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  type      NotificationType
+  title     String
+  body      String
+  read      Boolean          @default(false)
+  link      String?
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, read])
+  @@map("notifications")
+}
+
+enum ItineraryItemType {
+  ACTIVITY
+  FOOD
+  TRANSPORT
+  ACCOMMODATION
+  SIGHTSEEING
+  OTHER
+}
+
+enum ItineraryItemStatus {
+  APPROVED
+  PENDING_REVIEW
+  REJECTED
+}
+
+model ItineraryDay {
+  id          String          @id @default(uuid())
+  tripId      String
+  dayNumber   Int
+  date        DateTime?
+  title       String
+  description String?         @db.Text
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  trip  Trip            @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  items ItineraryItem[]
+
+  @@unique([tripId, dayNumber])
+  @@index([tripId])
+  @@map("itinerary_days")
+}
+
+model ItineraryItem {
+  id          String              @id @default(uuid())
+  dayId       String
+  tripId      String
+  order       Int                 @default(0)
+  time        String?
+  title       String
+  description String?             @db.Text
+  location    String?
+  type        ItineraryItemType   @default(ACTIVITY)
+  status      ItineraryItemStatus @default(APPROVED)
+  suggestedBy String?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  day       ItineraryDay @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  trip      Trip         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  suggester User?        @relation("ItinerarySuggestions", fields: [suggestedBy], references: [id], onDelete: SetNull)
+
+  @@index([dayId])
+  @@index([tripId])
+  @@map("itinerary_items")
+}
+
+model TripEssentialItem {
+  id       String  @id @default(uuid())
+  tripId   String
+  text     String
+  category String  @default("General")
+  order    Int     @default(0)
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@index([tripId])
+  @@map("trip_essential_items")
+}
+
+model UserPackingItem {
+  id        String   @id @default(uuid())
+  userId    String
+  tripId    String
+  text      String
+  checked   Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@index([userId, tripId])
+  @@map("user_packing_items")
+}
+
+enum ExpenseCategory {
+  FOOD
+  TRANSPORT
+  ACCOMMODATION
+  ACTIVITY
+  OTHER
+}
+
+model Expense {
+  id          String          @id @default(uuid())
+  tripId      String
+  paidById    String
+  amount      Float
+  description String
+  category    ExpenseCategory @default(OTHER)
+  createdAt   DateTime        @default(now())
+
+  trip   Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  paidBy User @relation("ExpensesPaid", fields: [paidById], references: [id], onDelete: Cascade)
+
+  @@index([tripId])
+  @@map("expenses")
+}
+
+model Poll {
+  id            String   @id @default(uuid())
+  tripId        String
+  createdById   String
+  question      String
+  allowMultiple Boolean  @default(false)
+  closed        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  trip      Trip         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  createdBy User         @relation("PollsCreated", fields: [createdById], references: [id], onDelete: Cascade)
+  options   PollOption[]
+
+  @@index([tripId])
+  @@map("polls")
+}
+
+model PollOption {
+  id     String @id @default(uuid())
+  pollId String
+  text   String
+  order  Int    @default(0)
+
+  poll  Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes PollVote[]
+
+  @@index([pollId])
+  @@map("poll_options")
+}
+
+model PollVote {
+  id       String @id @default(uuid())
+  optionId String
+  userId   String
+
+  option PollOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  user   User       @relation("PollVotes", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([optionId, userId])
+  @@map("poll_votes")
+}
+
+model EmergencyInfo {
+  id           String  @id @default(uuid())
+  userId       String
+  tripId       String
+  contactName  String
+  contactPhone String
+  bloodGroup   String?
+  allergies    String?
+  notes        String? @db.Text
+
+  user User @relation("EmergencyInfo", fields: [userId], references: [id], onDelete: Cascade)
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tripId])
+  @@map("emergency_info")
+}
+
+model TripTask {
+  id           String     @id @default(uuid())
+  tripId       String
+  createdById  String
+  assignedToId String?
+  title        String
+  description  String?    @db.Text
+  status       TaskStatus @default(TODO)
+  dueDate      DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  trip       Trip  @relation(fields: [tripId],       references: [id], onDelete: Cascade)
+  createdBy  User  @relation("TaskCreator",  fields: [createdById],  references: [id], onDelete: Cascade)
+  assignedTo User? @relation("TaskAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([tripId])
+  @@index([assignedToId])
+  @@map("trip_tasks")
+}
