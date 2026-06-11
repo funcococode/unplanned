@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { auth, signIn } from '@/lib/auth';
-import { MapPin } from 'lucide-react';
+import Image from 'next/image';
 
 export default async function LoginPage() {
   const session = await auth();
@@ -11,9 +11,11 @@ export default async function LoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 font-bold text-2xl text-gray-900 mb-3">
-            <MapPin className="h-6 w-6 text-orange-500" />
-            Unplanned
+          <div className="inline-flex items-center gap-2 mb-3">
+            <Image src="/favicon.svg" alt="" width={28} height={28} className="shrink-0" />
+            <span className="font-bold text-2xl text-gray-900 tracking-tight">
+              Trip <span className="text-orange-500">Unplanned</span>
+            </span>
           </div>
           <p className="text-gray-500 text-sm">Never cancel a trip because your friends said no.</p>
         </div>
@@ -59,7 +61,7 @@ export default async function LoginPage() {
 
           <p className="text-xs text-gray-400 text-center mt-6 leading-relaxed">
             By signing in, you agree to our Terms of Service and Privacy Policy.
-            Unplanned is in beta — things may change.
+            Trip Unplanned is in beta — things may change.
           </p>
         </div>
       </div>

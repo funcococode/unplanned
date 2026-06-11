@@ -11,13 +11,17 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Unplanned — Find Your Travel Companion',
-    template: '%s | Unplanned',
+    default: 'Trip Unplanned — Find Your Travel Companion',
+    template: '%s | Trip Unplanned',
   },
   description: 'Never cancel a trip because your friends said no. Create trips, meet travelers, explore together.',
   keywords: ['travel', 'travel companion', 'trip planning', 'travel community', 'backpacking'],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
   openGraph: {
-    title: 'Unplanned — Find Your Travel Companion',
+    title: 'Trip Unplanned — Find Your Travel Companion',
     description: 'Never cancel a trip because your friends said no.',
     type: 'website',
   },

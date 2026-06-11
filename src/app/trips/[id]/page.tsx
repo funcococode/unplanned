@@ -71,7 +71,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
           {/* TripNav — members/creator only */}
           {(isCreator || isMember) && (
             <div className="mb-8">
-              <TripNav tripId={id} isMember={true} />
+              <TripNav tripId={id} isMember={isMember} isCreator={isCreator} />
             </div>
           )}
 

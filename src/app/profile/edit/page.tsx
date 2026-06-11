@@ -5,7 +5,7 @@ import { Navbar } from '@/components/layout/navbar';
 import { EditProfileForm } from '@/features/profile/edit-profile-form';
 import type { UserDto } from '@/types';
 
-export const metadata = { title: 'Edit Profile — Unplanned' };
+export const metadata = { title: 'Edit Profile — Trip Unplanned' };
 
 export default async function EditProfilePage() {
   const session = await auth();
