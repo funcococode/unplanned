@@ -3,7 +3,7 @@ import { cn, getInitials } from '@/lib/utils';
 
 interface AvatarProps {
   src?: string | null;
-  name: string;
+  name: string | null | undefined;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
 }
@@ -22,7 +22,7 @@ export function Avatar({ src, name, size = 'md', className }: AvatarProps) {
     return (
       <Image
         src={src}
-        alt={name}
+        alt={name || 'User avatar'}
         width={image}
         height={image}
         className={cn('rounded-full object-cover', container, className)}
@@ -38,7 +38,7 @@ export function Avatar({ src, name, size = 'md', className }: AvatarProps) {
         className,
       )}
     >
-      {getInitials(name)}
+      {getInitials(name || 'User')}
     </div>
   );
 }
