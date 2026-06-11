@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
 import { useState } from 'react';
-import { MapPin, Menu, X, Plus, User, LogOut, LayoutDashboard, Compass, CalendarDays, Pencil } from 'lucide-react';
+import { Menu, X, Plus, User, LogOut, LayoutDashboard, Compass, CalendarDays, Pencil } from 'lucide-react';
 import { NotificationBell } from '@/components/shared/notification-bell';
 
 export function Navbar() {
@@ -23,9 +23,11 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl text-gray-900">
-            <MapPin className="h-5 w-5 text-orange-500" />
-            <span>Unplanned</span>
+          <Link href="/" className="flex items-center gap-1.5">
+            <Image src="/favicon.svg" alt="" width={24} height={24} className="shrink-0" />
+            <span className="font-bold text-lg text-gray-900 tracking-tight">
+              Trip <span className="text-orange-500">Unplanned</span>
+            </span>
           </Link>
 
           {/* Desktop nav */}
