@@ -41,13 +41,13 @@ export function ItineraryRouteMap({ days }: Props) {
   };
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+    <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl overflow-hidden">
       {/* Header — matches PersonalPacking */}
-      <div className="px-4 pt-4 pb-3 border-b border-gray-50">
+      <div className="px-4 pt-4 pb-3 border-b border-zinc-950/5 dark:border-white/5">
         <div className="flex items-center gap-2">
           <MapPin className="h-4 w-4 text-orange-500 shrink-0" />
-          <span className="text-xs font-semibold text-gray-900">Route Overview</span>
-          <span className="ml-auto text-[10px] text-gray-400">
+          <span className="text-xs font-semibold text-zinc-950 dark:text-white">Route Overview</span>
+          <span className="ml-auto text-[10px] text-zinc-950/55 dark:text-white/40">
             {days.length} day{days.length !== 1 ? 's' : ''}
           </span>
         </div>

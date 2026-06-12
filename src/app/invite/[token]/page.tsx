@@ -45,54 +45,54 @@ export default function InvitePage() {
   const fmt = (d: string) => new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-night flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {!trip && !error && (
           <div className="flex justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
+            <Loader2 className="h-8 w-8 animate-spin text-zinc-950/45 dark:text-white/30" />
           </div>
         )}
 
         {error && (
-          <div className="bg-white rounded-3xl border border-gray-100 p-8 text-center shadow-sm">
+          <div className="bg-night-soft rounded-3xl border border-zinc-950/10 dark:border-white/10 p-8 text-center shadow-sm">
             <AlertCircle className="h-12 w-12 text-red-300 mx-auto mb-4" />
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">Invalid Invite</h2>
-            <p className="text-sm text-gray-500">{error}</p>
+            <h2 className="text-lg font-semibold text-zinc-950 dark:text-white mb-2">Invalid Invite</h2>
+            <p className="text-sm text-zinc-950/60 dark:text-white/50">{error}</p>
           </div>
         )}
 
         {trip && !error && (
-          <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="bg-night-soft rounded-3xl border border-zinc-950/10 dark:border-white/10 shadow-sm overflow-hidden">
             {/* Cover */}
-            <div className="relative h-48 bg-gradient-to-br from-orange-100 to-amber-100">
+            <div className="relative h-48 bg-gradient-to-br from-orange-500/20 to-amber-500/20">
               {trip.coverImage
                 ? <Image src={trip.coverImage} alt={trip.title} fill className="object-cover" />
                 : <div className="absolute inset-0 flex items-center justify-center"><MapPin className="h-12 w-12 text-orange-200" /></div>}
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-4 left-5">
-                <p className="text-white/70 text-xs mb-0.5">You're invited to join</p>
-                <h1 className="text-white font-bold text-xl leading-tight">{trip.title}</h1>
+                <p className="text-zinc-950/80 dark:text-white/70 text-xs mb-0.5">You're invited to join</p>
+                <h1 className="text-zinc-950 dark:text-white font-bold text-xl leading-tight">{trip.title}</h1>
               </div>
             </div>
 
             <div className="p-6 space-y-4">
               <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-zinc-950/70 dark:text-white/60">
                   <MapPin className="h-4 w-4 text-orange-400 shrink-0" />
                   {trip.destination}
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-zinc-950/70 dark:text-white/60">
                   <Calendar className="h-4 w-4 text-orange-400 shrink-0" />
                   {fmt(trip.startDate)} — {fmt(trip.endDate)}
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-zinc-950/70 dark:text-white/60">
                   <Users className="h-4 w-4 text-orange-400 shrink-0" />
                   {trip._count.members} / {trip.maxMembers} members
                 </div>
               </div>
 
               {joined ? (
-                <div className="flex items-center gap-2 justify-center py-3 text-green-600 font-medium">
+                <div className="flex items-center gap-2 justify-center py-3 text-green-400 font-medium">
                   <CheckCircle2 className="h-5 w-5" />
                   Joined! Redirecting…
                 </div>
@@ -105,7 +105,7 @@ export default function InvitePage() {
                   {joining ? <><Loader2 className="h-4 w-4 animate-spin" />Joining…</> : trip._count.members >= trip.maxMembers ? 'Trip is full' : 'Join this trip'}
                 </button>
               )}
-              <p className="text-center text-xs text-gray-400">You'll be added as a member immediately.</p>
+              <p className="text-center text-xs text-zinc-950/55 dark:text-white/40">You'll be added as a member immediately.</p>
             </div>
           </div>
         )}

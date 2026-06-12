@@ -59,13 +59,13 @@ export async function TripDiscovery({ searchParams }: Props) {
       <TripFilters searchParams={searchParams} />
       {data.length === 0 ? (
         <div className="text-center py-24">
-          <p className="text-gray-400 text-lg mb-2">No trips found</p>
-          <p className="text-gray-400 text-sm">Try adjusting your filters or check back soon.</p>
+          <p className="text-zinc-950/55 dark:text-white/40 text-lg mb-2">No trips found</p>
+          <p className="text-zinc-950/55 dark:text-white/40 text-sm">Try adjusting your filters or check back soon.</p>
         </div>
       ) : (
         <>
           <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-zinc-950/60 dark:text-white/50">
               {isLoggedIn ? `${total} trip${total !== 1 ? 's' : ''} found` : `Showing ${visibleTrips.length} trips — sign in to see all`}
             </p>
           </div>
@@ -76,18 +76,18 @@ export async function TripDiscovery({ searchParams }: Props) {
             {showLoginGate && (
               <Link
                 href="/login?callbackUrl=/trips"
-                className="group relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-white hover:border-orange-300 hover:bg-orange-50 transition-all duration-200 min-h-[280px] p-8 text-center"
+                className="group relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-zinc-950/10 dark:border-white/10 bg-night-soft hover:border-orange-500/50 hover:bg-orange-500/10 transition-all duration-200 min-h-[280px] p-8 text-center"
               >
-                <div className="w-14 h-14 bg-gray-100 group-hover:bg-orange-100 rounded-2xl flex items-center justify-center mb-4 transition-colors">
-                  <Lock className="h-6 w-6 text-gray-400 group-hover:text-orange-500 transition-colors" />
+                <div className="w-14 h-14 bg-zinc-950/[0.05] dark:bg-white/[0.06] group-hover:bg-orange-500/15 rounded-2xl flex items-center justify-center mb-4 transition-colors">
+                  <Lock className="h-6 w-6 text-zinc-950/55 dark:text-white/40 group-hover:text-orange-500 transition-colors" />
                 </div>
-                <p className="text-base font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+                <p className="text-base font-semibold text-zinc-950 dark:text-white mb-2 group-hover:text-orange-400 transition-colors">
                   See all trips
                 </p>
-                <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+                <p className="text-sm text-zinc-950/60 dark:text-white/50 mb-5 leading-relaxed">
                   Sign in to unlock the full list of trips, traveler profiles, and more.
                 </p>
-                <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 group-hover:bg-orange-500 text-white text-sm font-semibold rounded-xl transition-colors">
+                <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500/80 group-hover:bg-orange-500 text-white text-sm font-semibold rounded-xl transition-colors">
                   <MapPin className="h-4 w-4" />
                   Sign in to explore
                 </span>
@@ -102,7 +102,7 @@ export async function TripDiscovery({ searchParams }: Props) {
                 <a
                   key={pg}
                   href={`?${new URLSearchParams({ ...searchParams, page: String(pg) }).toString()}`}
-                  className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${pg === p ? 'bg-gray-900 text-white' : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'}`}
+                  className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${pg === p ? 'bg-orange-500 text-white' : 'bg-night-soft text-zinc-950/90 dark:text-white/80 border border-zinc-950/10 dark:border-white/10 hover:bg-zinc-950/[0.04] dark:hover:bg-white/[0.04]'}`}
                 >
                   {pg}
                 </a>

@@ -23,12 +23,12 @@ export default async function EditProfilePage() {
   } as UserDto : null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-night">
       <Navbar />
       <main className="max-w-xl mx-auto px-4 sm:px-6 py-10 pb-20">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Edit Profile</h1>
-          <p className="text-gray-500 text-sm">Help other travelers get to know you.</p>
+          <h1 className="text-2xl font-bold text-zinc-950 dark:text-white mb-1">Edit Profile</h1>
+          <p className="text-zinc-950/60 dark:text-white/50 text-sm">Help other travelers get to know you.</p>
         </div>
         <EditProfileForm user={user} />
       </main>

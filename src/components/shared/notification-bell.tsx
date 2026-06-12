@@ -82,10 +82,10 @@ export function NotificationBell() {
     <div ref={ref} className="relative">
       <button
         onClick={handleOpen}
-        className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors"
+        className="relative p-2 rounded-lg hover:bg-zinc-950/[0.06] dark:hover:bg-white/10 transition-colors"
         aria-label="Notifications"
       >
-        <Bell className="h-5 w-5 text-gray-600" />
+        <Bell className="h-5 w-5 text-zinc-950/70 dark:text-white/60" />
         {unreadCount > 0 && (
           <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] font-bold text-white">
             {unreadCount > 9 ? '9+' : unreadCount}
@@ -96,9 +96,9 @@ export function NotificationBell() {
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl ring-1 ring-black/5 z-20 overflow-hidden">
-            <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-              <p className="text-sm font-semibold text-gray-900">Notifications</p>
+          <div className="absolute right-0 mt-2 w-80 bg-night-soft rounded-2xl shadow-xl ring-1 ring-black/5 z-20 overflow-hidden">
+            <div className="px-4 py-3 border-b border-zinc-950/10 dark:border-white/10 flex items-center justify-between">
+              <p className="text-sm font-semibold text-zinc-950 dark:text-white">Notifications</p>
               {notifications.length > 0 && (
                 <button
                   onClick={async () => {
@@ -106,7 +106,7 @@ export function NotificationBell() {
                     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
                     setUnreadCount(0);
                   }}
-                  className="text-xs text-gray-400 hover:text-gray-600"
+                  className="text-xs text-zinc-950/55 dark:text-white/40 hover:text-zinc-950/70 dark:hover:text-white/60"
                 >
                   Mark all read
                 </button>
@@ -115,25 +115,25 @@ export function NotificationBell() {
 
             {notifications.length === 0 ? (
               <div className="px-4 py-8 text-center">
-                <Bell className="h-8 w-8 text-gray-200 mx-auto mb-2" />
-                <p className="text-sm text-gray-400">No notifications yet</p>
+                <Bell className="h-8 w-8 text-zinc-950/35 dark:text-white/20 mx-auto mb-2" />
+                <p className="text-sm text-zinc-950/55 dark:text-white/40">No notifications yet</p>
               </div>
             ) : (
-              <ul className="max-h-96 overflow-y-auto divide-y divide-gray-50">
+              <ul className="max-h-96 overflow-y-auto divide-y divide-zinc-950/5 dark:divide-white/5">
                 {notifications.map((n) => (
                   <li
                     key={n.id}
                     onClick={() => handleClick(n)}
                     className={cn(
-                      'flex gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors',
+                      'flex gap-3 px-4 py-3 cursor-pointer hover:bg-zinc-950/[0.04] dark:hover:bg-white/[0.04] transition-colors',
                       !n.read && 'bg-orange-50/60',
                     )}
                   >
                     <span className="text-lg shrink-0 mt-0.5">{icon(n.type)}</span>
                     <div className="min-w-0 flex-1">
-                      <p className={cn('text-sm text-gray-900', !n.read && 'font-semibold')}>{n.title}</p>
-                      <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{n.body}</p>
-                      <p className="text-xs text-gray-400 mt-1">{timeAgo(n.createdAt)}</p>
+                      <p className={cn('text-sm text-zinc-950 dark:text-white', !n.read && 'font-semibold')}>{n.title}</p>
+                      <p className="text-xs text-zinc-950/60 dark:text-white/50 mt-0.5 line-clamp-2">{n.body}</p>
+                      <p className="text-xs text-zinc-950/55 dark:text-white/40 mt-1">{timeAgo(n.createdAt)}</p>
                     </div>
                     {!n.read && <span className="h-2 w-2 rounded-full bg-orange-500 shrink-0 mt-1.5" />}
                   </li>

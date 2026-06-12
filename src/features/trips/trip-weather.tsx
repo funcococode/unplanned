@@ -19,14 +19,14 @@ interface Props {
 const WMO: Record<number, { icon: typeof Sun; label: string; color: string }> = {
   0:  { icon: Sun,       label: 'Clear',         color: 'text-amber-400'  },
   1:  { icon: Sun,       label: 'Mainly clear',  color: 'text-amber-400'  },
-  2:  { icon: Cloud,     label: 'Partly cloudy', color: 'text-gray-400'   },
-  3:  { icon: Cloud,     label: 'Overcast',      color: 'text-gray-500'   },
-  45: { icon: Cloud,     label: 'Foggy',         color: 'text-gray-400'   },
-  48: { icon: Cloud,     label: 'Foggy',         color: 'text-gray-400'   },
+  2:  { icon: Cloud,     label: 'Partly cloudy', color: 'text-zinc-950/55 dark:text-white/40'   },
+  3:  { icon: Cloud,     label: 'Overcast',      color: 'text-zinc-950/60 dark:text-white/50'   },
+  45: { icon: Cloud,     label: 'Foggy',         color: 'text-zinc-950/55 dark:text-white/40'   },
+  48: { icon: Cloud,     label: 'Foggy',         color: 'text-zinc-950/55 dark:text-white/40'   },
   51: { icon: CloudRain, label: 'Light drizzle', color: 'text-blue-400'   },
   61: { icon: CloudRain, label: 'Light rain',    color: 'text-blue-400'   },
   63: { icon: CloudRain, label: 'Moderate rain', color: 'text-blue-500'   },
-  65: { icon: CloudRain, label: 'Heavy rain',    color: 'text-blue-600'   },
+  65: { icon: CloudRain, label: 'Heavy rain',    color: 'text-blue-400'   },
   71: { icon: CloudSnow, label: 'Light snow',    color: 'text-sky-300'    },
   80: { icon: CloudRain, label: 'Rain showers',  color: 'text-blue-400'   },
   95: { icon: Wind,      label: 'Thunderstorm',  color: 'text-purple-500' },
@@ -121,13 +121,13 @@ export function TripWeather({ destination, startDate, endDate }: Props) {
   }, [destination, startDate, endDate]);
 
   if (loading) return (
-    <div className="flex items-center gap-2 text-sm text-gray-400 py-3">
+    <div className="flex items-center gap-2 text-sm text-zinc-950/55 dark:text-white/40 py-3">
       <Loader2 className="h-4 w-4 animate-spin" /> Loading weather…
     </div>
   );
 
   if (error) return (
-    <div className="flex items-center gap-2 text-xs text-gray-400 py-2">
+    <div className="flex items-center gap-2 text-xs text-zinc-950/55 dark:text-white/40 py-2">
       <Thermometer className="h-4 w-4 shrink-0" /> {error}
     </div>
   );
@@ -139,15 +139,15 @@ export function TripWeather({ destination, startDate, endDate }: Props) {
       {/* Header */}
       <div className="flex items-center gap-2 mb-3">
         <Thermometer className="h-4 w-4 text-orange-400 shrink-0" />
-        <span className="text-sm font-semibold text-gray-900">
+        <span className="text-sm font-semibold text-zinc-950 dark:text-white">
           {isCurrent ? 'Weather Now' : 'Trip Forecast'}
         </span>
-        <span className="text-xs text-gray-400 ml-auto truncate">{destination}</span>
+        <span className="text-xs text-zinc-950/55 dark:text-white/40 ml-auto truncate">{destination}</span>
       </div>
 
       {/* "Too far out" notice */}
       {isCurrent && daysUntil > 0 && (
-        <div className="flex items-center gap-1.5 text-[11px] text-amber-600 bg-amber-50 rounded-lg px-2.5 py-1.5 mb-3">
+        <div className="flex items-center gap-1.5 text-[11px] text-amber-400 bg-amber-500/10 rounded-lg px-2.5 py-1.5 mb-3">
           <CalendarClock className="h-3.5 w-3.5 shrink-0" />
           Trip is {daysUntil} days away — showing current weather. Forecast updates closer to departure.
         </div>
@@ -158,19 +158,19 @@ export function TripWeather({ destination, startDate, endDate }: Props) {
         {days.map((day) => {
           const { icon: Icon, color } = getIcon(day.weatherCode);
           return (
-            <div key={day.date} className="flex flex-col items-center gap-1 bg-gray-50 rounded-xl py-2.5 px-1">
-              <span className="text-[9px] text-gray-400 font-medium leading-none">{dayLabel(day.date).split(' ')[0]}</span>
-              <span className="text-[9px] text-gray-300 leading-none">{dayLabel(day.date).split(' ')[1]}</span>
+            <div key={day.date} className="flex flex-col items-center gap-1 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-xl py-2.5 px-1">
+              <span className="text-[9px] text-zinc-950/55 dark:text-white/40 font-medium leading-none">{dayLabel(day.date).split(' ')[0]}</span>
+              <span className="text-[9px] text-zinc-950/45 dark:text-white/30 leading-none">{dayLabel(day.date).split(' ')[1]}</span>
               <Icon className={`h-4 w-4 mt-0.5 ${color}`} />
-              <span className="text-xs font-bold text-gray-800">{day.maxTemp}°</span>
-              <span className="text-[9px] text-gray-400">{day.minTemp}°</span>
+              <span className="text-xs font-bold text-zinc-950/95 dark:text-white/90">{day.maxTemp}°</span>
+              <span className="text-[9px] text-zinc-950/55 dark:text-white/40">{day.minTemp}°</span>
             </div>
           );
         })}
       </div>
 
       {forecast.length > 7 && (
-        <p className="text-[10px] text-gray-400 mt-2 text-center">
+        <p className="text-[10px] text-zinc-950/55 dark:text-white/40 mt-2 text-center">
           Showing {days.length} of {forecast.length} forecast days
         </p>
       )}

@@ -33,9 +33,9 @@ export function TripCard({ trip }: TripCardProps) {
 
   return (
     <Link href={`/trips/${trip.id}`} className="group block">
-      <article className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md hover:border-gray-200 transition-all duration-200">
+      <article className="bg-night-soft rounded-2xl ring-1 ring-zinc-950/10 dark:ring-white/10 overflow-hidden transition-all duration-300 hover:ring-orange-500/40 hover:shadow-[0_0_40px_-16px_rgba(249,115,22,0.5)]">
         {/* Cover Image */}
-        <div className={`relative h-52 overflow-hidden ${trip.coverImage ? 'bg-gray-100' : `bg-gradient-to-br ${destinationGradient(trip.destination)}`}`}>
+        <div className={`relative h-52 overflow-hidden ${trip.coverImage ? 'bg-zinc-950/[0.05] dark:bg-white/[0.06]' : `bg-gradient-to-br ${destinationGradient(trip.destination)}`}`}>
           {trip.coverImage ? (
             <Image
               src={trip.coverImage}
@@ -55,7 +55,7 @@ export function TripCard({ trip }: TripCardProps) {
 
           {/* Trip type badge */}
           <div className="absolute top-3 left-3">
-            <span className="px-2.5 py-1 bg-white/90 backdrop-blur text-xs font-semibold text-gray-700 rounded-full">
+            <span className="px-2.5 py-1 bg-night/70 backdrop-blur text-xs font-semibold text-zinc-950/95 dark:text-white/90 rounded-full ring-1 ring-zinc-950/15 dark:ring-white/15">
               {TRIP_TYPE_LABELS[trip.tripType]}
             </span>
           </div>
@@ -70,7 +70,7 @@ export function TripCard({ trip }: TripCardProps) {
           )}
           {spotsLeft === 0 && (
             <div className="absolute top-3 right-3">
-              <span className="px-2.5 py-1 bg-gray-900 text-white text-xs font-semibold rounded-full">
+              <span className="px-2.5 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
                 Full
               </span>
             </div>
@@ -79,20 +79,20 @@ export function TripCard({ trip }: TripCardProps) {
 
         {/* Content */}
         <div className="p-4">
-          <h3 className="font-semibold text-gray-900 text-base leading-snug group-hover:text-orange-600 transition-colors line-clamp-2 mb-1">
+          <h3 className="font-semibold text-zinc-950 dark:text-white text-base leading-snug group-hover:text-orange-400 transition-colors line-clamp-2 mb-1">
             {trip.title}
           </h3>
 
-          <div className="flex items-center gap-1 text-sm text-gray-500 mb-3">
+          <div className="flex items-center gap-1 text-sm text-zinc-950/60 dark:text-white/50 mb-3">
             <MapPin className="h-3.5 w-3.5 shrink-0" />
             <span className="truncate">{trip.destination}</span>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-zinc-950/60 dark:text-white/50">
             <div className="flex items-center gap-1">
               <Calendar className="h-3.5 w-3.5" />
               <span>{formatDateRange(trip.startDate, trip.endDate)}</span>
-              <span className="text-gray-300">·</span>
+              <span className="text-zinc-950/45 dark:text-white/30">·</span>
               <span>{duration}d</span>
             </div>
             <div className="flex items-center gap-1">
@@ -115,15 +115,15 @@ export function TripCard({ trip }: TripCardProps) {
                   className="rounded-full"
                 />
               ) : (
-                <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-600">
+                <div className="w-6 h-6 rounded-full bg-zinc-950/[0.06] dark:bg-white/10 flex items-center justify-center text-xs font-semibold text-zinc-950/70 dark:text-white/60">
                   {trip.creator.name[0]}
                 </div>
               )}
-              <span className="text-xs text-gray-500">{trip.creator.name}</span>
+              <span className="text-xs text-zinc-950/60 dark:text-white/50">{trip.creator.name}</span>
             </div>
 
             {/* Budget */}
-            <span className="text-xs font-medium text-gray-700 bg-gray-50 px-2 py-0.5 rounded-full">
+            <span className="text-xs font-medium text-zinc-950/90 dark:text-white/80 bg-zinc-950/[0.04] dark:bg-white/[0.04] px-2 py-0.5 rounded-full">
               {BUDGET_RANGE_LABELS[trip.budgetRange]}
             </span>
           </div>

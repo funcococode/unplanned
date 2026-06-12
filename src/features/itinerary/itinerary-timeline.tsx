@@ -50,12 +50,12 @@ const ITEM_TYPES: { value: ItemType; label: string; Icon: React.ComponentType<{ 
 ];
 
 const TYPE_COLORS: Record<ItemType, string> = {
-  ACTIVITY:      'bg-orange-100 text-orange-600 border-orange-200',
-  FOOD:          'bg-green-100 text-green-600 border-green-200',
-  TRANSPORT:     'bg-blue-100 text-blue-600 border-blue-200',
-  ACCOMMODATION: 'bg-violet-100 text-violet-600 border-violet-200',
-  SIGHTSEEING:   'bg-cyan-100 text-cyan-600 border-cyan-200',
-  OTHER:         'bg-gray-100 text-gray-500 border-gray-200',
+  ACTIVITY:      'bg-orange-500/15 text-orange-400 border-orange-500/40',
+  FOOD:          'bg-green-500/15 text-green-400 border-green-500/40',
+  TRANSPORT:     'bg-blue-500/15 text-blue-400 border-blue-500/40',
+  ACCOMMODATION: 'bg-violet-500/15 text-violet-400 border-violet-500/40',
+  SIGHTSEEING:   'bg-cyan-500/15 text-cyan-400 border-cyan-500/40',
+  OTHER:         'bg-zinc-950/[0.05] dark:bg-white/[0.06] text-zinc-950/60 dark:text-white/50 border-zinc-950/10 dark:border-white/10',
 };
 
 const TYPE_DOT: Record<ItemType, string> = {
@@ -64,7 +64,7 @@ const TYPE_DOT: Record<ItemType, string> = {
   TRANSPORT:     'bg-blue-500',
   ACCOMMODATION: 'bg-violet-500',
   SIGHTSEEING:   'bg-cyan-500',
-  OTHER:         'bg-gray-400',
+  OTHER:         'bg-zinc-950/30 dark:bg-white/30',
 };
 
 // ── Small helpers ─────────────────────────────────────────────────────────────
@@ -105,9 +105,9 @@ function ItemForm({ initial, onSave, onCancel, isSuggestion }: ItemFormProps) {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-4 space-y-3 shadow-sm">
+    <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-4 space-y-3 shadow-sm">
       {isSuggestion && (
-        <div className="flex items-center gap-2 text-xs font-medium text-amber-600 bg-amber-50 rounded-lg px-3 py-2">
+        <div className="flex items-center gap-2 text-xs font-medium text-amber-400 bg-amber-500/10 rounded-lg px-3 py-2">
           <Lightbulb className="h-3.5 w-3.5" />
           This will be sent to the host for approval
         </div>
@@ -115,17 +115,17 @@ function ItemForm({ initial, onSave, onCancel, isSuggestion }: ItemFormProps) {
       <input
         value={title} onChange={(e) => setTitle(e.target.value)}
         placeholder="Stop title *"
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
+        className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
         autoFocus
       />
       <div className="grid grid-cols-2 gap-2">
-        <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2">
-          <Clock className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+        <div className="flex items-center gap-2 border border-zinc-950/10 dark:border-white/10 rounded-xl px-3 py-2">
+          <Clock className="h-3.5 w-3.5 text-zinc-950/55 dark:text-white/40 shrink-0" />
           <input value={time} onChange={(e) => setTime(e.target.value)} type="time"
             className="flex-1 text-sm focus:outline-none min-w-0" />
         </div>
-        <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2">
-          <MapPin className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+        <div className="flex items-center gap-2 border border-zinc-950/10 dark:border-white/10 rounded-xl px-3 py-2">
+          <MapPin className="h-3.5 w-3.5 text-zinc-950/55 dark:text-white/40 shrink-0" />
           <input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Location"
             className="flex-1 text-sm focus:outline-none min-w-0" />
         </div>
@@ -134,20 +134,20 @@ function ItemForm({ initial, onSave, onCancel, isSuggestion }: ItemFormProps) {
         {ITEM_TYPES.map(({ value, label, Icon }) => (
           <button key={value} onClick={() => setType(value)}
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-colors
-              ${type === value ? TYPE_COLORS[value] : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'}`}>
+              ${type === value ? TYPE_COLORS[value] : 'bg-zinc-950/[0.04] dark:bg-white/[0.04] text-zinc-950/60 dark:text-white/50 border-zinc-950/10 dark:border-white/10 hover:bg-zinc-950/[0.06] dark:hover:bg-white/10'}`}>
             <Icon className="h-3 w-3" />{label}
           </button>
         ))}
       </div>
       <textarea value={description} onChange={(e) => setDesc(e.target.value)} placeholder="Description (optional)"
         rows={2}
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none" />
+        className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none" />
       <div className="flex gap-2 justify-end">
-        <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-xl transition-colors">
+        <button onClick={onCancel} className="px-4 py-2 text-sm text-zinc-950/70 dark:text-white/60 hover:bg-zinc-950/[0.06] dark:hover:bg-white/10 rounded-xl transition-colors">
           Cancel
         </button>
         <button onClick={handleSave} disabled={!title.trim() || saving}
-          className="px-4 py-2 text-sm font-medium bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-50 transition-colors">
+          className="px-4 py-2 text-sm font-medium bg-orange-500 text-white rounded-xl hover:bg-orange-400 disabled:opacity-50 transition-colors">
           {saving ? 'Saving…' : isSuggestion ? 'Submit suggestion' : 'Save'}
         </button>
       </div>
@@ -170,15 +170,15 @@ function DayForm({ initial, onSave, onCancel }: { initial?: Partial<ItineraryDay
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-4 space-y-3 shadow-sm">
+    <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-4 space-y-3 shadow-sm">
       <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Day title (e.g. Arrival in Goa)"
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500" autoFocus />
+        className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500" autoFocus />
       <input value={date} onChange={(e) => setDate(e.target.value)} type="date"
-        className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500" />
+        className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500" />
       <div className="flex gap-2 justify-end">
-        <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-xl transition-colors">Cancel</button>
+        <button onClick={onCancel} className="px-4 py-2 text-sm text-zinc-950/70 dark:text-white/60 hover:bg-zinc-950/[0.06] dark:hover:bg-white/10 rounded-xl transition-colors">Cancel</button>
         <button onClick={handleSave} disabled={!title.trim() || saving}
-          className="px-4 py-2 text-sm font-medium bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-50 transition-colors">
+          className="px-4 py-2 text-sm font-medium bg-orange-500 text-white rounded-xl hover:bg-orange-400 disabled:opacity-50 transition-colors">
           {saving ? 'Saving…' : 'Save Day'}
         </button>
       </div>
@@ -266,12 +266,12 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
   if (days.length === 0) {
     if (isCreator) {
       return (
-        <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-2xl">
-          <CalendarDays className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-          <p className="text-sm font-semibold text-gray-700 mb-1">No itinerary yet</p>
-          <p className="text-xs text-gray-400 mb-4">Build a day-by-day plan for your travelers</p>
+        <div className="text-center py-12 border-2 border-dashed border-zinc-950/10 dark:border-white/10 rounded-2xl">
+          <CalendarDays className="h-10 w-10 text-zinc-950/45 dark:text-white/30 mx-auto mb-3" />
+          <p className="text-sm font-semibold text-zinc-950/90 dark:text-white/80 mb-1">No itinerary yet</p>
+          <p className="text-xs text-zinc-950/55 dark:text-white/40 mb-4">Build a day-by-day plan for your travelers</p>
           <button onClick={() => setAddingDay(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-colors">
+            className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white text-sm font-medium rounded-xl hover:bg-orange-400 transition-colors">
             <Plus className="h-4 w-4" /> Add First Day
           </button>
           {addingDay && (
@@ -283,9 +283,9 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
       );
     }
     return (
-      <div className="text-center py-10 bg-gray-50 rounded-2xl">
-        <CalendarDays className="h-8 w-8 text-gray-300 mx-auto mb-2" />
-        <p className="text-sm text-gray-400">The host hasn&apos;t built the itinerary yet.</p>
+      <div className="text-center py-10 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-2xl">
+        <CalendarDays className="h-8 w-8 text-zinc-950/45 dark:text-white/30 mx-auto mb-2" />
+        <p className="text-sm text-zinc-950/55 dark:text-white/40">The host hasn&apos;t built the itinerary yet.</p>
       </div>
     );
   }
@@ -293,14 +293,14 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
   return (
     <div className="space-y-3">
       {error && (
-        <div className="text-sm text-red-600 bg-red-50 rounded-xl px-4 py-3">{error}</div>
+        <div className="text-sm text-red-400 bg-red-500/10 rounded-xl px-4 py-3">{error}</div>
       )}
 
       {/* Pending suggestions banner (host only) */}
       {isCreator && pendingCount > 0 && (
-        <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3">
+        <div className="flex items-center gap-3 bg-amber-500/10 border border-amber-500/40 rounded-2xl px-4 py-3">
           <Lightbulb className="h-4 w-4 text-amber-500 shrink-0" />
-          <p className="text-sm font-medium text-amber-700">
+          <p className="text-sm font-medium text-amber-300">
             {pendingCount} pending suggestion{pendingCount > 1 ? 's' : ''} awaiting your review
           </p>
         </div>
@@ -313,9 +313,9 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
         const pendingDay = day.items.filter((i) => i.status === 'PENDING_REVIEW').length;
 
         return (
-          <div key={day.id} className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+          <div key={day.id} className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl overflow-hidden">
             {/* Day header */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 bg-gray-50/60">
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-zinc-950/10 dark:border-white/10 bg-zinc-950/[0.03] dark:bg-white/[0.03]">
               <button onClick={() => toggleDay(day.id)} className="flex items-center gap-3 flex-1 min-w-0 text-left">
                 <span className="flex items-center justify-center w-7 h-7 bg-orange-500 text-white text-xs font-bold rounded-full shrink-0">
                   {day.dayNumber}
@@ -323,26 +323,26 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
                 <div className="min-w-0">
                   {editingDay !== day.id && (
                     <>
-                      <p className="text-sm font-semibold text-gray-900 truncate">{day.title}</p>
-                      {day.date && <p className="text-xs text-gray-400">{formatDate(day.date)}</p>}
+                      <p className="text-sm font-semibold text-zinc-950 dark:text-white truncate">{day.title}</p>
+                      {day.date && <p className="text-xs text-zinc-950/55 dark:text-white/40">{formatDate(day.date)}</p>}
                     </>
                   )}
                 </div>
                 {pendingDay > 0 && (
-                  <span className="ml-auto shrink-0 flex items-center gap-1 px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
+                  <span className="ml-auto shrink-0 flex items-center gap-1 px-2 py-0.5 bg-amber-500/15 text-amber-300 text-xs font-semibold rounded-full">
                     <Lightbulb className="h-3 w-3" />{pendingDay}
                   </span>
                 )}
-                {collapsed ? <ChevronDown className="h-4 w-4 text-gray-400 ml-auto shrink-0" /> : <ChevronUp className="h-4 w-4 text-gray-400 ml-auto shrink-0" />}
+                {collapsed ? <ChevronDown className="h-4 w-4 text-zinc-950/55 dark:text-white/40 ml-auto shrink-0" /> : <ChevronUp className="h-4 w-4 text-zinc-950/55 dark:text-white/40 ml-auto shrink-0" />}
               </button>
               {isCreator && (
                 <div className="flex items-center gap-1 shrink-0">
                   <button onClick={() => setEditingDay(editingDay === day.id ? null : day.id)}
-                    className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                    className="p-1.5 text-zinc-950/55 dark:text-white/40 hover:text-zinc-950/90 dark:hover:text-white/80 hover:bg-zinc-950/[0.06] dark:hover:bg-white/10 rounded-lg transition-colors">
                     <Pencil className="h-3.5 w-3.5" />
                   </button>
                   <button onClick={() => handleDeleteDay(day.id)}
-                    className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                    className="p-1.5 text-zinc-950/55 dark:text-white/40 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -351,7 +351,7 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
 
             {/* Edit day form */}
             {editingDay === day.id && (
-              <div className="px-5 py-4 border-b border-gray-100">
+              <div className="px-5 py-4 border-b border-zinc-950/10 dark:border-white/10">
                 <DayForm initial={day}
                   onSave={(data) => handleEditDay(day.id, data)}
                   onCancel={() => setEditingDay(null)} />
@@ -362,12 +362,12 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
             {!collapsed && (
               <div className="px-5 py-4 space-y-0">
                 {items.length === 0 && !addingItem && !suggestingIn ? (
-                  <p className="text-xs text-gray-400 py-2">No stops yet for this day.</p>
+                  <p className="text-xs text-zinc-950/55 dark:text-white/40 py-2">No stops yet for this day.</p>
                 ) : (
                   <div className="relative">
                     {/* Vertical line */}
                     {items.length > 0 && (
-                      <div className="absolute left-[11px] top-4 bottom-4 w-px bg-gray-100" />
+                      <div className="absolute left-[11px] top-4 bottom-4 w-px bg-zinc-950/[0.05] dark:bg-white/[0.06]" />
                     )}
                     <div className="space-y-1">
                       {items.map((item) => {
@@ -386,12 +386,12 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
                               </div>
                             ) : (
                               <div className={`flex gap-3 py-2.5 rounded-xl px-2 group transition-colors
-                                ${isPending ? 'bg-amber-50/60' : isRejected ? 'bg-gray-50 opacity-50' : 'hover:bg-gray-50'}`}>
+                                ${isPending ? 'bg-amber-50/60' : isRejected ? 'bg-zinc-950/[0.04] dark:bg-white/[0.04] opacity-50' : 'hover:bg-zinc-950/[0.04] dark:hover:bg-white/[0.04]'}`}>
                                 {/* Dot */}
                                 <div className="relative flex flex-col items-center shrink-0 pt-0.5">
-                                  <span className={`w-5 h-5 rounded-full border-2 border-white shadow-sm flex items-center justify-center
-                                    ${isPending ? 'bg-amber-400' : isRejected ? 'bg-gray-300' : TYPE_DOT[item.type]}`}>
-                                    <TypeIcon type={item.type} className="h-2.5 w-2.5 text-white" />
+                                  <span className={`w-5 h-5 rounded-full border-2 border-zinc-950 dark:border-white shadow-sm flex items-center justify-center
+                                    ${isPending ? 'bg-amber-400' : isRejected ? 'bg-zinc-950/10 dark:bg-white/15' : TYPE_DOT[item.type]}`}>
+                                    <TypeIcon type={item.type} className="h-2.5 w-2.5 text-zinc-950 dark:text-white" />
                                   </span>
                                 </div>
 
@@ -401,22 +401,22 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
                                     <div className="min-w-0">
                                       <div className="flex items-center gap-2 flex-wrap">
                                         {item.time && (
-                                          <span className="text-xs font-mono text-gray-400 shrink-0">{item.time}</span>
+                                          <span className="text-xs font-mono text-zinc-950/55 dark:text-white/40 shrink-0">{item.time}</span>
                                         )}
-                                        <span className="text-sm font-medium text-gray-900">{item.title}</span>
+                                        <span className="text-sm font-medium text-zinc-950 dark:text-white">{item.title}</span>
                                         {isPending && (
-                                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded-full">
+                                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-300 bg-amber-500/15 px-1.5 py-0.5 rounded-full">
                                             <Lightbulb className="h-2.5 w-2.5" />SUGGESTION
                                           </span>
                                         )}
                                       </div>
                                       {item.location && (
-                                        <p className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
+                                        <p className="flex items-center gap-1 text-xs text-zinc-950/55 dark:text-white/40 mt-0.5">
                                           <MapPin className="h-3 w-3" />{item.location}
                                         </p>
                                       )}
                                       {item.description && (
-                                        <p className="text-xs text-gray-500 mt-1 leading-relaxed">{item.description}</p>
+                                        <p className="text-xs text-zinc-950/60 dark:text-white/50 mt-1 leading-relaxed">{item.description}</p>
                                       )}
                                       {/* Suggester info */}
                                       {item.suggester && (
@@ -424,11 +424,11 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
                                           {item.suggester.image ? (
                                             <Image src={item.suggester.image} alt={item.suggester.name} width={14} height={14} className="rounded-full" />
                                           ) : (
-                                            <div className="w-3.5 h-3.5 rounded-full bg-gray-200 flex items-center justify-center text-[8px] font-bold text-gray-500">
+                                            <div className="w-3.5 h-3.5 rounded-full bg-zinc-950/[0.06] dark:bg-white/10 flex items-center justify-center text-[8px] font-bold text-zinc-950/60 dark:text-white/50">
                                               {item.suggester.name[0]}
                                             </div>
                                           )}
-                                          <span className="text-[10px] text-gray-400">Suggested by {item.suggester.name}</span>
+                                          <span className="text-[10px] text-zinc-950/55 dark:text-white/40">Suggested by {item.suggester.name}</span>
                                         </div>
                                       )}
                                     </div>
@@ -440,25 +440,25 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
                                         <>
                                           <button onClick={() => handleReview(item.id, 'APPROVED')}
                                             title="Approve"
-                                            className="p-1.5 text-green-600 bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
+                                            className="p-1.5 text-green-400 bg-green-500/10 hover:bg-green-500/15 rounded-lg transition-colors">
                                             <Check className="h-3.5 w-3.5" />
                                           </button>
                                           <button onClick={() => handleReview(item.id, 'REJECTED')}
                                             title="Reject"
-                                            className="p-1.5 text-red-500 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                                            className="p-1.5 text-red-500 bg-red-500/10 hover:bg-red-500/15 rounded-lg transition-colors">
                                             <X className="h-3.5 w-3.5" />
                                           </button>
                                         </>
                                       )}
                                       {canEdit && (
                                         <button onClick={() => setEditingItem(item.id)}
-                                          className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
+                                          className="p-1.5 text-zinc-950/55 dark:text-white/40 hover:text-zinc-950/90 dark:hover:text-white/80 hover:bg-zinc-950/[0.06] dark:hover:bg-white/10 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
                                           <Pencil className="h-3.5 w-3.5" />
                                         </button>
                                       )}
                                       {canDelete && (
                                         <button onClick={() => handleDeleteItem(item.id)}
-                                          className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
+                                          className="p-1.5 text-zinc-950/55 dark:text-white/40 hover:text-red-400 hover:bg-red-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
                                           <Trash2 className="h-3.5 w-3.5" />
                                         </button>
                                       )}
@@ -486,16 +486,16 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
 
                 {/* Action buttons */}
                 {addingItem !== day.id && suggestingIn !== day.id && (
-                  <div className="flex gap-2 mt-3 pt-3 border-t border-gray-50">
+                  <div className="flex gap-2 mt-3 pt-3 border-t border-zinc-950/5 dark:border-white/5">
                     {isCreator && (
                       <button onClick={() => setAddingItem(day.id)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-950/70 dark:text-white/60 hover:bg-zinc-950/[0.06] dark:hover:bg-white/10 rounded-lg transition-colors">
                         <Plus className="h-3.5 w-3.5" /> Add stop
                       </button>
                     )}
                     {isMember && !isCreator && (
                       <button onClick={() => setSuggestingIn(day.id)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-amber-600 bg-amber-50 hover:bg-amber-100 rounded-lg transition-colors">
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-amber-400 bg-amber-500/10 hover:bg-amber-500/15 rounded-lg transition-colors">
                         <Lightbulb className="h-3.5 w-3.5" /> Suggest a spot
                       </button>
                     )}
@@ -514,7 +514,7 @@ export function ItineraryTimeline({ tripId, initialDays, isCreator, isMember, is
             <DayForm onSave={handleAddDay} onCancel={() => setAddingDay(false)} />
           ) : (
             <button onClick={() => setAddingDay(true)}
-              className="w-full flex items-center justify-center gap-2 py-3 border-2 border-dashed border-gray-200 text-sm font-medium text-gray-500 rounded-2xl hover:border-orange-300 hover:text-orange-500 transition-colors">
+              className="w-full flex items-center justify-center gap-2 py-3 border-2 border-dashed border-zinc-950/10 dark:border-white/10 text-sm font-medium text-zinc-950/60 dark:text-white/50 rounded-2xl hover:border-orange-500/50 hover:text-orange-500 transition-colors">
               <Plus className="h-4 w-4" /> Add Day
             </button>
           )}
