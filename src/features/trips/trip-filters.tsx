@@ -42,19 +42,19 @@ export function TripFilters({ searchParams }: TripFiltersProps) {
       {/* Search + Sort row */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-950/55 dark:text-white/40" />
           <input
             type="text"
             placeholder="Search by destination..."
             defaultValue={searchParams.destination ?? ''}
             onChange={(e) => updateFilter('destination', e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+            className="w-full pl-9 pr-4 py-2.5 border border-zinc-950/10 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
           />
         </div>
         <select
           value={searchParams.sort ?? 'newest'}
           onChange={(e) => updateFilter('sort', e.target.value)}
-          className="px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900 bg-white"
+          className="px-3 py-2.5 border border-zinc-950/10 dark:border-white/10 rounded-xl text-sm text-zinc-950/90 dark:text-white/80 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-night-soft"
         >
           <option value="newest">Newest first</option>
           <option value="popular">Most popular</option>
@@ -63,7 +63,7 @@ export function TripFilters({ searchParams }: TripFiltersProps) {
 
       {/* Filter chips */}
       <div className="flex flex-wrap gap-2 items-center">
-        <span className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
+        <span className="flex items-center gap-1.5 text-xs font-medium text-zinc-950/60 dark:text-white/50">
           <SlidersHorizontal className="h-3.5 w-3.5" />
           Filters:
         </span>
@@ -71,7 +71,7 @@ export function TripFilters({ searchParams }: TripFiltersProps) {
         <select
           value={searchParams.tripType ?? ''}
           onChange={(e) => updateFilter('tripType', e.target.value)}
-          className="px-3 py-1.5 border border-gray-200 rounded-full text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900 bg-white"
+          className="px-3 py-1.5 border border-zinc-950/10 dark:border-white/10 rounded-full text-xs text-zinc-950/90 dark:text-white/80 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-night-soft"
         >
           <option value="">All Types</option>
           {Object.values(TripType).map((t) => (
@@ -82,7 +82,7 @@ export function TripFilters({ searchParams }: TripFiltersProps) {
         <select
           value={searchParams.budgetRange ?? ''}
           onChange={(e) => updateFilter('budgetRange', e.target.value)}
-          className="px-3 py-1.5 border border-gray-200 rounded-full text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900 bg-white"
+          className="px-3 py-1.5 border border-zinc-950/10 dark:border-white/10 rounded-full text-xs text-zinc-950/90 dark:text-white/80 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-night-soft"
         >
           <option value="">Any Budget</option>
           {Object.values(BudgetRange).map((b) => (
@@ -95,21 +95,21 @@ export function TripFilters({ searchParams }: TripFiltersProps) {
             type="date"
             value={searchParams.startDate ?? ''}
             onChange={(e) => updateFilter('startDate', e.target.value)}
-            className="px-3 py-1.5 border border-gray-200 rounded-full text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900 bg-white"
+            className="px-3 py-1.5 border border-zinc-950/10 dark:border-white/10 rounded-full text-xs text-zinc-950/90 dark:text-white/80 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-night-soft"
           />
-          <span className="text-xs text-gray-400">–</span>
+          <span className="text-xs text-zinc-950/55 dark:text-white/40">–</span>
           <input
             type="date"
             value={searchParams.endDate ?? ''}
             onChange={(e) => updateFilter('endDate', e.target.value)}
-            className="px-3 py-1.5 border border-gray-200 rounded-full text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900 bg-white"
+            className="px-3 py-1.5 border border-zinc-950/10 dark:border-white/10 rounded-full text-xs text-zinc-950/90 dark:text-white/80 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-night-soft"
           />
         </div>
 
         {hasFilters && (
           <button
             onClick={clearFilters}
-            className="px-3 py-1.5 text-xs font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors"
+            className="px-3 py-1.5 text-xs font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-full transition-colors"
           >
             Clear filters
           </button>

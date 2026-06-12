@@ -35,19 +35,19 @@ export default async function TripToolsPage({ params }: { params: Promise<{ id: 
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1">
-        <div className="relative h-36 bg-gradient-to-br from-gray-100 to-gray-200">
+        <div className="relative h-36 bg-gradient-to-br from-night-soft to-night">
           {trip.coverImage && (
             <Image src={trip.coverImage} alt={trip.title} fill className="object-cover" priority sizes="100vw" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10" />
           <div className="absolute inset-0 flex items-end">
             <div className="max-w-3xl mx-auto w-full px-4 sm:px-6 pb-4 flex items-center gap-3">
-              <Link href={`/trips/${id}`} className="text-white/70 hover:text-white transition-colors">
+              <Link href={`/trips/${id}`} className="text-zinc-950/80 dark:text-white/70 hover:text-zinc-950 dark:hover:text-white transition-colors">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
               <div>
-                <p className="text-white/60 text-xs">Trip Tools</p>
-                <h1 className="text-white font-semibold text-lg leading-tight">{trip.title}</h1>
+                <p className="text-zinc-950/70 dark:text-white/60 text-xs">Trip Tools</p>
+                <h1 className="text-zinc-950 dark:text-white font-semibold text-lg leading-tight">{trip.title}</h1>
               </div>
             </div>
           </div>
@@ -58,8 +58,8 @@ export default async function TripToolsPage({ params }: { params: Promise<{ id: 
 
           <div className="space-y-6">
             {/* Trip status */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Trip Status</h3>
+            <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-6">
+              <h3 className="font-semibold text-zinc-950 dark:text-white mb-4">Trip Status</h3>
               <TripStatusControl
                 tripId={trip.id}
                 initialStatus={trip.status as 'PLANNING' | 'CONFIRMED' | 'ONGOING' | 'COMPLETED'}
@@ -69,13 +69,13 @@ export default async function TripToolsPage({ params }: { params: Promise<{ id: 
 
             {/* Invite link — creator only */}
             {isCreator && (
-              <div className="bg-white border border-gray-100 rounded-2xl p-6">
+              <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-6">
                 <InviteLink tripId={trip.id} />
               </div>
             )}
 
             {/* Tasks */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
+            <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-6">
               <TripTasks
                 tripId={trip.id}
                 members={memberList}
@@ -85,7 +85,7 @@ export default async function TripToolsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Expense tracker */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
+            <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-6">
               <ExpenseTracker
                 tripId={trip.id}
                 members={memberList}
@@ -95,12 +95,12 @@ export default async function TripToolsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Polls */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
+            <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-6">
               <TripPolls tripId={trip.id} isCreator={isCreator} currentUserId={userId ?? ''} />
             </div>
 
             {/* Emergency info */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
+            <div className="bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-2xl p-6">
               <EmergencyInfoCard tripId={trip.id} isCreator={isCreator} />
             </div>
           </div>

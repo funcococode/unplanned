@@ -38,19 +38,19 @@ export default async function TripItineraryPage({ params }: { params: Promise<{ 
       <Navbar />
       <main className="flex-1">
         {/* Compact hero */}
-        <div className="relative h-36 bg-gradient-to-br from-gray-100 to-gray-200">
+        <div className="relative h-36 bg-gradient-to-br from-night-soft to-night">
           {trip.coverImage && (
             <Image src={trip.coverImage} alt={trip.title} fill className="object-cover" priority sizes="100vw" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10" />
           <div className="absolute inset-0 flex items-end">
             <div className="max-w-3xl mx-auto w-full px-4 sm:px-6 pb-4 flex items-center gap-3">
-              <Link href={`/trips/${id}`} className="text-white/70 hover:text-white transition-colors">
+              <Link href={`/trips/${id}`} className="text-zinc-950/80 dark:text-white/70 hover:text-zinc-950 dark:hover:text-white transition-colors">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
               <div>
-                <p className="text-white/60 text-xs">Itinerary</p>
-                <h1 className="text-white font-semibold text-lg leading-tight">{trip.title}</h1>
+                <p className="text-zinc-950/70 dark:text-white/60 text-xs">Itinerary</p>
+                <h1 className="text-zinc-950 dark:text-white font-semibold text-lg leading-tight">{trip.title}</h1>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default async function TripItineraryPage({ params }: { params: Promise<{ 
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <p className="text-sm text-gray-400 mb-4 leading-relaxed">
+              <p className="text-sm text-zinc-950/55 dark:text-white/40 mb-4 leading-relaxed">
                 A rough plan — not written in stone. Suggest stops, vote on ideas, change on the go.
               </p>
               <ItineraryTimeline

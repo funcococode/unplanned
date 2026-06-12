@@ -51,18 +51,18 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
       <Navbar />
       <main className="flex-1">
         {/* Hero */}
-        <div className="relative h-72 sm:h-96 bg-gradient-to-br from-gray-100 to-gray-200">
+        <div className="relative h-96 sm:h-[480px] bg-gradient-to-br from-night-soft to-night">
           {trip.coverImage
             ? <Image src={trip.coverImage} alt={trip.title} fill className="object-cover" priority sizes="100vw" />
-            : <div className="absolute inset-0 flex items-center justify-center"><MapPin className="h-16 w-16 text-gray-300" /></div>}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6">
+            : <div className="absolute inset-0 flex items-center justify-center"><MapPin className="h-16 w-16 text-zinc-950/45 dark:text-white/30" /></div>}
+          <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-night via-night/45 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 pb-10">
             <div className="max-w-5xl mx-auto">
               <div className="flex items-center gap-2 mb-3">
                 <Badge variant="default">{TRIP_TYPE_LABELS[trip.tripType as keyof typeof TRIP_TYPE_LABELS]}</Badge>
                 <TripStatusBadge status={trip.status as 'PLANNING' | 'CONFIRMED' | 'ONGOING' | 'COMPLETED'} />
               </div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-white">{trip.title}</h1>
+              <h1 className="font-display text-4xl sm:text-6xl font-bold text-white leading-[1.05] max-w-3xl">{trip.title}</h1>
             </div>
           </div>
         </div>
@@ -83,87 +83,87 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
               {/* Stats */}
               <div className={`grid gap-3 ${isLoggedIn ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3'}`}>
                 {/* Destination */}
-                <div className="group relative overflow-hidden bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100 rounded-2xl p-4">
-                  <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center mb-3">
+                <div className="group relative overflow-hidden bg-gradient-to-br from-orange-500/10 to-amber-500/10 border border-orange-500/30 rounded-2xl p-4">
+                  <div className="w-8 h-8 rounded-xl bg-orange-500/15 flex items-center justify-center mb-3">
                     <MapPin className="h-4 w-4 text-orange-500" />
                   </div>
                   <p className="text-[11px] font-medium text-orange-400 uppercase tracking-wide mb-0.5">Destination</p>
-                  <p className="text-sm font-bold text-gray-900 leading-snug">{trip.destination}</p>
+                  <p className="text-sm font-bold text-zinc-950 dark:text-white leading-snug">{trip.destination}</p>
                 </div>
 
                 {/* Dates */}
-                <div className="group relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-4">
-                  <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center mb-3">
+                <div className="group relative overflow-hidden bg-gradient-to-br from-blue-500/10 to-indigo-500/10 border border-blue-500/30 rounded-2xl p-4">
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/15 flex items-center justify-center mb-3">
                     <Calendar className="h-4 w-4 text-blue-500" />
                   </div>
                   <p className="text-[11px] font-medium text-blue-400 uppercase tracking-wide mb-0.5">Dates</p>
-                  <p className="text-sm font-bold text-gray-900 leading-snug">{formatDateRange(trip.startDate, trip.endDate)}</p>
+                  <p className="text-sm font-bold text-zinc-950 dark:text-white leading-snug">{formatDateRange(trip.startDate, trip.endDate)}</p>
                   <p className="text-xs text-blue-400 mt-0.5">{duration} days</p>
                 </div>
 
                 {/* Members */}
                 {isLoggedIn && (
-                  <div className="group relative overflow-hidden bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100 rounded-2xl p-4">
-                    <div className="w-8 h-8 rounded-xl bg-violet-100 flex items-center justify-center mb-3">
+                  <div className="group relative overflow-hidden bg-gradient-to-br from-violet-500/10 to-purple-500/10 border border-violet-500/30 rounded-2xl p-4">
+                    <div className="w-8 h-8 rounded-xl bg-violet-500/15 flex items-center justify-center mb-3">
                       <Users className="h-4 w-4 text-violet-500" />
                     </div>
                     <p className="text-[11px] font-medium text-violet-400 uppercase tracking-wide mb-0.5">Members</p>
-                    <p className="text-sm font-bold text-gray-900 leading-snug">{trip._count.members} <span className="font-normal text-gray-400">/ {trip.maxMembers}</span></p>
+                    <p className="text-sm font-bold text-zinc-950 dark:text-white leading-snug">{trip._count.members} <span className="font-normal text-zinc-950/55 dark:text-white/40">/ {trip.maxMembers}</span></p>
                     <p className="text-xs text-violet-400 mt-0.5">{spotsLeft} spot{spotsLeft !== 1 ? 's' : ''} left</p>
                   </div>
                 )}
 
                 {/* Budget */}
                 {isLoggedIn && (
-                  <div className="group relative overflow-hidden bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-100 rounded-2xl p-4">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center mb-3">
+                  <div className="group relative overflow-hidden bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/30 rounded-2xl p-4">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/15 flex items-center justify-center mb-3">
                       <Wallet className="h-4 w-4 text-emerald-500" />
                     </div>
                     <p className="text-[11px] font-medium text-emerald-400 uppercase tracking-wide mb-0.5">Budget</p>
-                    <p className="text-sm font-bold text-gray-900 leading-snug">{BUDGET_RANGE_LABELS[trip.budgetRange as keyof typeof BUDGET_RANGE_LABELS]}</p>
+                    <p className="text-sm font-bold text-zinc-950 dark:text-white leading-snug">{BUDGET_RANGE_LABELS[trip.budgetRange as keyof typeof BUDGET_RANGE_LABELS]}</p>
                   </div>
                 )}
               </div>
 
               {/* About */}
               <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-3">About this trip</h2>
-                <p className="text-gray-600 leading-relaxed whitespace-pre-line">{trip.description}</p>
+                <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white mb-3">About this trip</h2>
+                <p className="text-zinc-950/70 dark:text-white/60 leading-relaxed whitespace-pre-line">{trip.description}</p>
               </section>
 
               {/* Itinerary preview */}
               <section>
                 <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white flex items-center gap-2">
                     <CalendarDays className="h-5 w-5 text-orange-500" />Itinerary
                   </h2>
                   <Link href={`/trips/${id}/itinerary`}
-                    className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600 font-medium">
+                    className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-400 font-medium">
                     View all <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
                 {itineraryPreview.length > 0 ? (
                   <div className="space-y-2">
                     {itineraryPreview.map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                      <div key={i} className="flex items-center gap-3 p-3 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-xl">
                         <span className="text-xs font-bold text-orange-400 w-10 shrink-0">Day {item.day}</span>
-                        <p className="text-sm font-medium text-gray-900 flex-1 truncate">{item.title}</p>
-                        {item.time && <span className="text-xs text-gray-400 shrink-0">{item.time}</span>}
+                        <p className="text-sm font-medium text-zinc-950 dark:text-white flex-1 truncate">{item.title}</p>
+                        {item.time && <span className="text-xs text-zinc-950/55 dark:text-white/40 shrink-0">{item.time}</span>}
                       </div>
                     ))}
                     <Link href={`/trips/${id}/itinerary`}
-                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-gray-200 text-sm text-gray-400 hover:border-orange-300 hover:text-orange-500 transition-colors mt-1">
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-zinc-950/10 dark:border-white/10 text-sm text-zinc-950/55 dark:text-white/40 hover:border-orange-500/50 hover:text-orange-500 transition-colors mt-1">
                       {totalItineraryItems > 3 ? `+${totalItineraryItems - 3} more stops` : 'Open full itinerary'}
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
                 ) : (
                   <Link href={`/trips/${id}/itinerary`}
-                    className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-colors group">
-                    <CalendarDays className="h-8 w-8 text-gray-200 group-hover:text-orange-300 transition-colors" />
+                    className="flex items-center gap-3 p-4 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-2xl border border-dashed border-zinc-950/10 dark:border-white/10 hover:border-orange-500/50 hover:bg-orange-500/10 transition-colors group">
+                    <CalendarDays className="h-8 w-8 text-zinc-950/35 dark:text-white/20 group-hover:text-orange-300 transition-colors" />
                     <div>
-                      <p className="text-sm font-medium text-gray-700">No itinerary planned yet</p>
-                      <p className="text-xs text-gray-400">Open the itinerary page to add days and stops →</p>
+                      <p className="text-sm font-medium text-zinc-950/90 dark:text-white/80">No itinerary planned yet</p>
+                      <p className="text-xs text-zinc-950/55 dark:text-white/40">Open the itinerary page to add days and stops →</p>
                     </div>
                   </Link>
                 )}
@@ -172,19 +172,19 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
               {/* Meeting point */}
               {trip.meetingPoint && (isLoggedIn ? (
                 <section>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white mb-3 flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-orange-500" />Meeting Point
                   </h2>
-                  <p className="text-gray-600">{trip.meetingPoint}</p>
+                  <p className="text-zinc-950/70 dark:text-white/60">{trip.meetingPoint}</p>
                 </section>
               ) : (
                 <section>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white mb-3 flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-orange-500" />Meeting Point
                   </h2>
-                  <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100">
-                    <Lock className="h-4 w-4 text-gray-400 shrink-0" />
-                    <p className="text-sm text-gray-500">
+                  <div className="flex items-center gap-3 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-xl p-4 border border-zinc-950/10 dark:border-white/10">
+                    <Lock className="h-4 w-4 text-zinc-950/55 dark:text-white/40 shrink-0" />
+                    <p className="text-sm text-zinc-950/60 dark:text-white/50">
                       <Link href={`/login?callbackUrl=/trips/${id}`} className="text-orange-500 font-medium hover:underline">Sign in</Link>{' '}to see the meeting point.
                     </p>
                   </div>
@@ -194,11 +194,11 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
               {/* Rules */}
               {trip.rules && (
                 <section>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white mb-3 flex items-center gap-2">
                     <ShieldCheck className="h-5 w-5 text-orange-500" />Trip Rules
                   </h2>
-                  <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-                    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{trip.rules}</p>
+                  <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
+                    <p className="text-sm text-zinc-950/90 dark:text-white/80 leading-relaxed whitespace-pre-line">{trip.rules}</p>
                   </div>
                 </section>
               )}
@@ -206,17 +206,17 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
               {/* Travelers */}
               {isLoggedIn ? (
                 <section>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white mb-4 flex items-center gap-2">
                     <Users className="h-5 w-5 text-orange-500" />Travelers ({members.length})
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {members.map((m) => (
                       <Link key={m.id} href={m.user.username ? `/profile/${m.user.username}` : '#'}
-                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-orange-50 hover:border-orange-100 border border-transparent transition-colors group">
+                        className="flex items-center gap-3 p-3 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-xl hover:bg-orange-500/10 hover:border-orange-500/30 border border-transparent transition-colors group">
                         <Avatar src={m.user.image} name={m.user.name} size="md" />
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors truncate">{m.user.name}</p>
-                          {m.user.city && <p className="text-xs text-gray-500">{m.user.city}, {m.user.country}</p>}
+                          <p className="text-sm font-semibold text-zinc-950 dark:text-white group-hover:text-orange-400 transition-colors truncate">{m.user.name}</p>
+                          {m.user.city && <p className="text-xs text-zinc-950/60 dark:text-white/50">{m.user.city}, {m.user.country}</p>}
                         </div>
                         {m.role === 'CREATOR' && <Badge variant="outline" className="ml-auto shrink-0">Creator</Badge>}
                       </Link>
@@ -225,20 +225,20 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
                 </section>
               ) : (
                 <section>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white mb-4 flex items-center gap-2">
                     <Users className="h-5 w-5 text-orange-500" />Travelers
                   </h2>
-                  <Link href={`/login?callbackUrl=/trips/${id}`} className="flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50 transition-colors group">
+                  <Link href={`/login?callbackUrl=/trips/${id}`} className="flex items-center gap-4 p-5 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-2xl border border-zinc-950/10 dark:border-white/10 hover:border-orange-500/40 hover:bg-orange-500/10 transition-colors group">
                     <div className="flex -space-x-2">
                       {[...Array(3)].map((_, i) => (
-                        <div key={i} className="w-9 h-9 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center" />
+                        <div key={i} className="w-9 h-9 rounded-full bg-zinc-950/[0.06] dark:bg-white/10 border-2 border-zinc-950 dark:border-white flex items-center justify-center" />
                       ))}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">Sign in to see travelers</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{trip._count.members} traveler{trip._count.members !== 1 ? 's' : ''} joined</p>
+                      <p className="text-sm font-semibold text-zinc-950 dark:text-white group-hover:text-orange-400 transition-colors">Sign in to see travelers</p>
+                      <p className="text-xs text-zinc-950/60 dark:text-white/50 mt-0.5">{trip._count.members} traveler{trip._count.members !== 1 ? 's' : ''} joined</p>
                     </div>
-                    <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-orange-400 transition-colors shrink-0" />
+                    <ArrowRight className="h-4 w-4 text-zinc-950/45 dark:text-white/30 group-hover:text-orange-400 transition-colors shrink-0" />
                   </Link>
                 </section>
               )}
@@ -247,25 +247,25 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
               {(isCreator || isMember) && essentialItems.length > 0 && (
                 <section>
                   <div className="flex items-center justify-between mb-3">
-                    <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white flex items-center gap-2">
                       <Package className="h-5 w-5 text-orange-500" />Packing
                     </h2>
                     <Link href={`/trips/${id}/packing`}
-                      className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600 font-medium">
+                      className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-400 font-medium">
                       View all <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
                   <div className="space-y-2">
                     {essentialItems.slice(0, 3).map((item) => (
-                      <div key={item.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                        <CheckCircle2 className="h-4 w-4 text-gray-300 shrink-0" />
-                        <p className="text-sm font-medium text-gray-900 flex-1 truncate">{item.text}</p>
-                        {item.category && <span className="text-xs text-gray-400 shrink-0">{item.category}</span>}
+                      <div key={item.id} className="flex items-center gap-3 p-3 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-xl">
+                        <CheckCircle2 className="h-4 w-4 text-zinc-950/45 dark:text-white/30 shrink-0" />
+                        <p className="text-sm font-medium text-zinc-950 dark:text-white flex-1 truncate">{item.text}</p>
+                        {item.category && <span className="text-xs text-zinc-950/55 dark:text-white/40 shrink-0">{item.category}</span>}
                       </div>
                     ))}
                     {essentialItems.length > 3 && (
                       <Link href={`/trips/${id}/packing`}
-                        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-gray-200 text-sm text-gray-400 hover:border-orange-300 hover:text-orange-500 transition-colors mt-1">
+                        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-zinc-950/10 dark:border-white/10 text-sm text-zinc-950/55 dark:text-white/40 hover:border-orange-500/50 hover:text-orange-500 transition-colors mt-1">
                         +{essentialItems.length - 3} more items <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     )}
@@ -277,20 +277,20 @@ export default async function TripDetailPage({ params }: { params: Promise<{ id:
               {(isCreator || isMember) && (
                 <section>
                   <div className="flex items-center justify-between mb-3">
-                    <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <h2 className="font-display text-xl font-bold text-zinc-950 dark:text-white flex items-center gap-2">
                       <Wrench className="h-5 w-5 text-orange-500" />Trip Tools
                     </h2>
                   </div>
                   <Link href={`/trips/${id}/tools`}
-                    className="flex items-center gap-4 p-5 bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl border border-orange-100 hover:border-orange-300 transition-colors group">
+                    className="flex items-center gap-4 p-5 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-500/30 hover:border-orange-500/50 transition-colors group">
                     <div className="flex gap-3 text-2xl">
                       <span>💸</span><span>🗳️</span><span>🚨</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">Expenses, Polls & Emergency Info</p>
-                      <p className="text-xs text-gray-500 mt-0.5">Manage shared costs, vote on plans, and keep emergency contacts safe.</p>
+                      <p className="text-sm font-semibold text-zinc-950 dark:text-white group-hover:text-orange-400 transition-colors">Expenses, Polls & Emergency Info</p>
+                      <p className="text-xs text-zinc-950/60 dark:text-white/50 mt-0.5">Manage shared costs, vote on plans, and keep emergency contacts safe.</p>
                     </div>
-                    <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-orange-400 transition-colors shrink-0" />
+                    <ArrowRight className="h-4 w-4 text-zinc-950/45 dark:text-white/30 group-hover:text-orange-400 transition-colors shrink-0" />
                   </Link>
                 </section>
               )}

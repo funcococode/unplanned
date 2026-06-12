@@ -1,12 +1,19 @@
 import type { Metadata } from 'next';
-import { Geist } from 'next/font/google';
+import { Geist, Space_Grotesk } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { Providers } from './providers';
+import { RouteProgress } from '@/components/shared/route-progress';
 import './globals.css';
 
 const geist = Geist({
   subsets: ['latin'],
   variable: '--font-geist-sans',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -29,8 +36,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.variable} font-sans min-h-screen`}>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{if(localStorage.getItem('theme')==='light'){document.documentElement.classList.remove('dark')}}catch(e){}})()",
+          }}
+        />
+      </head>
+      <body className={`${geist.variable} ${spaceGrotesk.variable} font-sans min-h-screen`}>
+        <RouteProgress />
         <SessionProvider>
           <Providers>{children}</Providers>
         </SessionProvider>

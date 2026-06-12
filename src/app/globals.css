@@ -4,8 +4,14 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Light theme */
+    --background: 40 33% 97%;
+    --foreground: 24 10% 10%;
+    --night: 40 33% 97%;        /* page canvas — warm paper white */
+    --night-soft: 0 0% 100%;    /* solid cards */
+    --grid-dot: 12 10 9;        /* rgb for dotted grid */
+    --grid-alpha: 0.05;
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --primary: 222.2 47.4% 11.2%;
@@ -24,8 +30,17 @@
     --radius: 0.625rem;
 
     /* Brand colors */
-    --brand: 24 100% 50%;       /* Warm orange — travel / adventure */
+    --brand: 24 100% 50%;
     --brand-light: 24 100% 95%;
+  }
+
+  .dark {
+    --background: 20 14% 4%;
+    --foreground: 0 0% 98%;
+    --night: 20 14% 4%;         /* page canvas — warm near-black */
+    --night-soft: 30 15% 8%;    /* solid cards */
+    --grid-dot: 255 255 255;
+    --grid-alpha: 0.06;
   }
 
   * {
@@ -43,6 +58,47 @@
 }
 
 @layer utilities {
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+
+  .animate-float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 0.9; }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 6s ease-in-out infinite;
+  }
+
+  /* Faint dotted grid — follows theme */
+  .night-grid {
+    background-image: radial-gradient(rgba(var(--grid-dot) / var(--grid-alpha)) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track, .animate-float-slow, .animate-pulse-glow {
+      animation: none;
+    }
+  }
+
   .line-clamp-2 {
     overflow: hidden;
     display: -webkit-box;

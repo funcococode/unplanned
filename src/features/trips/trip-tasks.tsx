@@ -18,7 +18,7 @@ interface Props { tripId: string; members: Member[]; currentUserId: string; isCr
 const STATUS_CYCLE: Record<TaskStatus, TaskStatus> = { TODO: 'IN_PROGRESS', IN_PROGRESS: 'DONE', DONE: 'TODO' };
 const STATUS_LABEL: Record<TaskStatus, string>     = { TODO: 'To do', IN_PROGRESS: 'In progress', DONE: 'Done' };
 const STATUS_COLOR: Record<TaskStatus, string>     = {
-  TODO:        'text-gray-400',
+  TODO:        'text-zinc-950/55 dark:text-white/40',
   IN_PROGRESS: 'text-amber-500',
   DONE:        'text-green-500',
 };
@@ -26,12 +26,12 @@ const STATUS_COLOR: Record<TaskStatus, string>     = {
 function StatusIcon({ status }: { status: TaskStatus }) {
   if (status === 'DONE')        return <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />;
   if (status === 'IN_PROGRESS') return <Clock        className="h-4 w-4 text-amber-500 shrink-0" />;
-  return <Circle className="h-4 w-4 text-gray-300 shrink-0" />;
+  return <Circle className="h-4 w-4 text-zinc-950/45 dark:text-white/30 shrink-0" />;
 }
 
 function MemberAvatar({ member }: { member: Member }) {
   if (member.image) return <Image src={member.image} alt={member.name} width={18} height={18} className="rounded-full" />;
-  return <div className="w-4.5 h-4.5 rounded-full bg-gray-200 flex items-center justify-center text-[9px] font-bold text-gray-600">{member.name[0]}</div>;
+  return <div className="w-4.5 h-4.5 rounded-full bg-zinc-950/[0.06] dark:bg-white/10 flex items-center justify-center text-[9px] font-bold text-zinc-950/70 dark:text-white/60">{member.name[0]}</div>;
 }
 
 export function TripTasks({ tripId, members, currentUserId, isCreator }: Props) {
@@ -76,41 +76,41 @@ export function TripTasks({ tripId, members, currentUserId, isCreator }: Props) 
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-gray-900 flex items-center gap-2">
+        <h3 className="font-semibold text-zinc-950 dark:text-white flex items-center gap-2">
           <ListChecks className="h-5 w-5 text-violet-500" /> Trip Tasks
         </h3>
         {!adding && (
-          <button onClick={() => setAdding(true)} className="flex items-center gap-1.5 text-xs font-medium text-violet-600 hover:text-violet-700">
+          <button onClick={() => setAdding(true)} className="flex items-center gap-1.5 text-xs font-medium text-violet-400 hover:text-violet-300">
             <Plus className="h-3.5 w-3.5" />Add task
           </button>
         )}
       </div>
 
       {adding && (
-        <div className="bg-violet-50 border border-violet-100 rounded-2xl p-4 space-y-3 mb-4">
+        <div className="bg-violet-500/10 border border-violet-500/30 rounded-2xl p-4 space-y-3 mb-4">
           <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
             placeholder="What needs to be done?" autoFocus
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
+            className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
           <input value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
             placeholder="Details (optional)"
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
+            className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500" />
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Assign to</label>
+              <label className="text-xs text-zinc-950/60 dark:text-white/50 mb-1 block">Assign to</label>
               <select value={form.assignedToId} onChange={(e) => setForm((f) => ({ ...f, assignedToId: e.target.value }))}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none bg-white">
+                className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none bg-night-soft">
                 <option value="">Anyone</option>
                 {members.map((m) => <option key={m.id} value={m.id}>{m.name.split(' ')[0]}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Due date</label>
+              <label className="text-xs text-zinc-950/60 dark:text-white/50 mb-1 block">Due date</label>
               <input type="date" value={form.dueDate} onChange={(e) => setForm((f) => ({ ...f, dueDate: e.target.value }))}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none bg-white" />
+                className="w-full px-3 py-2 text-sm border border-zinc-950/10 dark:border-white/10 rounded-xl focus:outline-none bg-night-soft" />
             </div>
           </div>
           <div className="flex gap-2 justify-end">
-            <button onClick={() => setAdding(false)} className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-xl">Cancel</button>
+            <button onClick={() => setAdding(false)} className="px-4 py-2 text-sm text-zinc-950/70 dark:text-white/60 hover:bg-zinc-950/[0.06] dark:hover:bg-white/10 rounded-xl">Cancel</button>
             <button onClick={handleAdd} disabled={!form.title.trim() || saving}
               className="px-4 py-2 text-sm font-medium bg-violet-600 text-white rounded-xl hover:bg-violet-700 disabled:opacity-50">
               {saving ? 'Saving…' : 'Add'}
@@ -120,11 +120,11 @@ export function TripTasks({ tripId, members, currentUserId, isCreator }: Props) 
       )}
 
       {loading ? (
-        <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 animate-spin text-gray-300" /></div>
+        <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 animate-spin text-zinc-950/45 dark:text-white/30" /></div>
       ) : tasks.length === 0 ? (
-        <div className="text-center py-8 bg-gray-50 rounded-2xl">
-          <ListChecks className="h-8 w-8 text-gray-200 mx-auto mb-2" />
-          <p className="text-sm text-gray-400">No tasks yet. Add one to get organised.</p>
+        <div className="text-center py-8 bg-zinc-950/[0.04] dark:bg-white/[0.04] rounded-2xl">
+          <ListChecks className="h-8 w-8 text-zinc-950/35 dark:text-white/20 mx-auto mb-2" />
+          <p className="text-sm text-zinc-950/55 dark:text-white/40">No tasks yet. Add one to get organised.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -141,24 +141,24 @@ export function TripTasks({ tripId, members, currentUserId, isCreator }: Props) 
                     const canDelete = isCreator || task.createdBy.id === currentUserId;
                     const overdue = task.dueDate && task.status !== 'DONE' && new Date(task.dueDate) < new Date();
                     return (
-                      <div key={task.id} className="flex items-start gap-3 p-3 bg-white border border-gray-100 rounded-xl group">
+                      <div key={task.id} className="flex items-start gap-3 p-3 bg-night-soft border border-zinc-950/10 dark:border-white/10 rounded-xl group">
                         <button onClick={() => cycleStatus(task)} className="mt-0.5 shrink-0 hover:scale-110 transition-transform">
                           <StatusIcon status={task.status} />
                         </button>
                         <div className="flex-1 min-w-0">
-                          <p className={`text-sm font-medium ${task.status === 'DONE' ? 'line-through text-gray-400' : 'text-gray-900'}`}>
+                          <p className={`text-sm font-medium ${task.status === 'DONE' ? 'line-through text-zinc-950/55 dark:text-white/40' : 'text-zinc-950 dark:text-white'}`}>
                             {task.title}
                           </p>
-                          {task.description && <p className="text-xs text-gray-400 mt-0.5 truncate">{task.description}</p>}
+                          {task.description && <p className="text-xs text-zinc-950/55 dark:text-white/40 mt-0.5 truncate">{task.description}</p>}
                           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                             {task.assignedTo && (
                               <div className="flex items-center gap-1">
                                 <MemberAvatar member={task.assignedTo} />
-                                <span className="text-[10px] text-gray-500">{task.assignedTo.name.split(' ')[0]}</span>
+                                <span className="text-[10px] text-zinc-950/60 dark:text-white/50">{task.assignedTo.name.split(' ')[0]}</span>
                               </div>
                             )}
                             {task.dueDate && (
-                              <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md ${overdue ? 'bg-red-50 text-red-500' : 'bg-gray-100 text-gray-500'}`}>
+                              <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-md ${overdue ? 'bg-red-500/10 text-red-500' : 'bg-zinc-950/[0.05] dark:bg-white/[0.06] text-zinc-950/60 dark:text-white/50'}`}>
                                 {overdue ? '⚠️ ' : ''}{new Date(task.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                               </span>
                             )}
@@ -166,7 +166,7 @@ export function TripTasks({ tripId, members, currentUserId, isCreator }: Props) 
                         </div>
                         {canDelete && (
                           <button onClick={() => handleDelete(task.id)}
-                            className="opacity-0 group-hover:opacity-100 p-1 text-gray-300 hover:text-red-400 transition-all shrink-0">
+                            className="opacity-0 group-hover:opacity-100 p-1 text-zinc-950/45 dark:text-white/30 hover:text-red-400 transition-all shrink-0">
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         )}

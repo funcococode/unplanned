@@ -46,12 +46,12 @@ export default async function EditTripPage({ params }: { params: Promise<{ id: s
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-night">
       <Navbar />
       <main className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Trip</h1>
-          <p className="text-gray-500">Update your trip details.</p>
+          <h1 className="text-3xl font-bold text-zinc-950 dark:text-white mb-2">Edit Trip</h1>
+          <p className="text-zinc-950/60 dark:text-white/50">Update your trip details.</p>
         </div>
         <EditTripForm trip={tripDto} />
       </main>
